@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delicias Karim - Menú Digital</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:#ffe6f0;
+}
+
+/* Fondo pastel tipo bollitos */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image: url("data:image/svg+xml,\
+    <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>\
+    <text x='20' y='100' font-size='50' fill='%23ffb3d1'>🧁</text>\
+    <text x='120' y='50' font-size='40' fill='%23ffc2d9'>☕</text>\
+    <text x='80' y='160' font-size='40' fill='%23ff99c8'>🍰</text>\
+    </svg>");
+    opacity:0.08;
+    background-repeat:repeat;
+    background-size:220px;
+}
+
+/* Contenedor principal */
+.menu-container{
+    position:relative;
+    width:950px;
+    background:white;
+    border-radius:50px;
+    padding:50px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.25);
+    border:12px solid #ff6fa3;
+    text-align:center;
+}
+
+/* Logo */
+.logo img{
+    width:260px;
+    margin-bottom:15px;
+}
+
+/* Título desayuno */
+.title{
+    font-family:'Playfair Display', serif;
+    font-size:44px;
+    color:#d63384;
+    margin-bottom:35px;
+    letter-spacing:1px;
+}
+
+/* Productos */
+.product{
+    display:flex;
+    justify-content:space-between;
+    font-size:28px;
+    padding:14px 0;
+    border-bottom:2px dotted #ffc2d9;
+    transition:0.3s;
+}
+
+.product:hover{
+    transform:scale(1.02);
+    color:#d63384;
+}
+
+.price{
+    font-weight:600;
+    color:#ff3d8d;
+}
+
+/* Panel admin */
+.admin-panel{
+    margin-top:35px;
+    display:none;
+}
+
+input{
+    padding:10px;
+    margin:5px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:12px;
+    background:#ff3d8d;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#e60073;
+}
+
+.footer{
+    margin-top:25px;
+    font-size:14px;
+    color:#999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="menu-container">
+
+    <div class="logo">
+        <img src="logo.png" alt="Delicias Karim">
+    </div>
+
+    <div class="title">Desayunos Peruanos</div>
+
+    <div id="productList"></div>
+
+    <div class="admin-panel" id="adminPanel">
+        <h3>Panel Administrador</h3>
+        <input type="text" id="name" placeholder="Producto">
+        <input type="number" id="price" placeholder="Precio €">
+        <button onclick="addProduct()">Añadir</button>
+    </div>
+
+    <div class="footer">
+        Doble clic para activar modo administrador
+    </div>
+
+</div>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products")) || [
+    {name:"Pan con Chicharrón", price:5.50},
+    {name:"Pan con Tamal", price:4.50},
+    {name:"Pan con Pollo", price:4.00},
+    {name:"Lomo al Jugo", price:8.90},
+    {name:"Combinado Especial", price:9.50}
+];
+
+function render(){
+    const list = document.getElementById("productList");
+    list.innerHTML="";
+    products.forEach((p)=>{
+        list.innerHTML += `
+            <div class="product">
+                <span>${p.name}</span>
+                <span class="price">${p.price.toFixed(2)} €</span>
+            </div>
+        `;
+    });
+    localStorage.setItem("products",JSON.stringify(products));
+}
+
+function addProduct(){
+    const name = document.getElementById("name").value;
+    const price = parseFloat(document.getElementById("price").value);
+    if(name && price){
+        products.push({name,price});
+        render();
+        document.getElementById("name").value="";
+        document.getElementById("price").value="";
+    }
+}
+
+document.body.addEventListener("dblclick",()=>{
+    const panel=document.getElementById("adminPanel");
+    panel.style.display = panel.style.display==="none"?"block":"none";
+});
+
+render();
+</script>
+
+</body>
+</html>

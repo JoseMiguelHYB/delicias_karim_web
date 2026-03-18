@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delicias Karim - Menú Digital</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+    padding:clamp(8px, 2vh, 24px);
+    background:#ffe6f0;
+    position:relative;
+}
+
+.bg-icons{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.bg-icons span{
+    position:absolute;
+    user-select:none;
+    filter:grayscale(18%);
+}
+
+/* Contenedor principal */
+.menu-container{
+    position:relative;
+    z-index:1;
+    width:min(930px, 92vw);
+    background:linear-gradient(180deg, #fffefe 0%, #fff8fb 100%);
+    border-radius:50px;
+    padding:clamp(14px, 2.2vh, 30px);
+    box-shadow:0 30px 70px rgba(0,0,0,0.25);
+    border:12px solid #ff6fa3;
+    text-align:center;
+    box-sizing:border-box;
+    overflow:hidden;
+}
+
+.menu-container::before{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border-radius:34px;
+    border:1px solid rgba(255, 150, 190, 0.35);
+    pointer-events:none;
+}
+
+.menu-container::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:120px;
+    background:linear-gradient(180deg, rgba(255, 111, 163, 0.12) 0%, rgba(255, 111, 163, 0) 100%);
+    pointer-events:none;
+}
+
+/* Logo */
+.logo{
+    display:flex;
+    justify-content:center;
+    line-height:0;
+    margin-bottom:2px;
+    isolation:isolate;
+}
+
+.logo img{
+    width:clamp(300px, 50vh, 520px);
+    display:block;
+    margin-top:clamp(-125px, -13vh, -80px);
+    margin-bottom:clamp(-140px, -14vh, -90px);
+    mix-blend-mode:multiply;
+    filter:saturate(1.05) contrast(1.04) drop-shadow(0 8px 14px rgba(177, 72, 120, 0.14));
+}
+
+/* Título desayuno */
+.title{
+    font-family:'Playfair Display', serif;
+    font-size:clamp(28px, 4.4vh, 50px);
+    color:#d63384;
+    margin-bottom:6px;
+    letter-spacing:1px;
+    text-shadow:0 4px 14px rgba(214, 51, 132, 0.16);
+}
+
+.subtitle{
+    font-size:clamp(12px, 1.5vh, 16px);
+    font-weight:500;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:#b05a85;
+    margin-bottom:12px;
+}
+
+/* Productos */
+.product{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:clamp(18px, 2.9vh, 34px);
+    gap:14px;
+    padding:10px 14px;
+    margin-bottom:7px;
+    border:1px dashed rgba(255, 145, 186, 0.7);
+    border-radius:16px;
+    background:linear-gradient(90deg, rgba(255, 236, 245, 0.55) 0%, rgba(255, 255, 255, 0.95) 70%);
+    transition:0.3s;
+}
+
+.product-name{
+    font-weight:500;
+    letter-spacing:0.3px;
+    color:#2d2d2d;
+    text-align:left;
+}
+
+@media (max-width: 640px){
+    .menu-container{
+        border-width:8px;
+        border-radius:28px;
+    }
+
+    .title{
+        margin-bottom:22px;
+    }
+}
+
+@media (max-height: 900px){
+    .menu-container{
+        padding:12px 18px;
+        border-width:10px;
+    }
+
+    .logo img{
+        width:clamp(280px, 42vh, 460px);
+        margin-top:clamp(-100px, -11vh, -70px);
+        margin-bottom:clamp(-112px, -12vh, -74px);
+    }
+
+    .title{
+        font-size:clamp(24px, 4vh, 38px);
+        margin-bottom:10px;
+    }
+
+    .product{
+        font-size:clamp(16px, 2.5vh, 28px);
+        padding:8px 10px;
+        margin-bottom:6px;
+    }
+
+    .footer{
+        margin-top:10px;
+        font-size:12px;
+    }
+}
+
+.product:hover{
+    transform:translateX(3px);
+    color:#d63384;
+    border-color:#ff6fa3;
+    box-shadow:0 10px 22px rgba(214, 51, 132, 0.13);
+}
+
+.price{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    letter-spacing:0.4px;
+    color:#ff3d8d;
+    background:#fff;
+    padding:2px 8px;
+    border-radius:10px;
+}
+
+/* Panel admin */
+.admin-panel{
+    margin-top:35px;
+    display:none;
+}
+
+input{
+    padding:10px;
+    margin:5px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:12px;
+    background:#ff3d8d;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#e60073;
+}
+
+.footer{
+    margin-top:25px;
+    font-size:14px;
+    color:#999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-icons" id="bgIcons"></div>
+
+<div class="menu-container">
+
+    <div class="logo">
+        <img src="logo.png" alt="Delicias Karim">
+    </div>
+
+    <div class="title">Desayunos Peruanos</div>
+    <div class="subtitle">Sabor casero • Recién servido</div>
+
+    <div id="productList"></div>
+
+    <div class="admin-panel" id="adminPanel">
+        <h3>Panel Administrador</h3>
+        <input type="text" id="name" placeholder="Producto">
+        <input type="number" id="price" placeholder="Precio €">
+        <button onclick="addProduct()">Añadir</button>
+    </div>
+
+    <div class="footer">
+        Doble clic para activar modo administrador
+    </div>
+
+</div>
+
+<script>
+const defaultProducts = [
+    {name:"🥪 Pan con Chicharrón", price:5.50},
+    {name:"🥪 Pan con Tamal", price:4.50},
+    {name:"🍗 Pan con Pollo", price:4.00},
+    {name:"🥑 Pan con Palta", price:4.20},
+    {name:"🍖 Pan con Jamón del País", price:4.80},
+    {name:"🥚 Pan con Huevo", price:3.90},
+    {name:"🍲 Caldo de Gallina", price:7.90},
+    {name:"🍲 Caldo de Mote", price:7.50},
+    {name:"🌾 Quinua Caliente", price:4.50},
+    {name:"🥣 Avena con Manzana", price:3.80},
+    {name:"🥪 Tamal Criollo", price:4.00},
+    {name:"🌽 Humita Dulce", price:3.90},
+    {name:"🥩 Lomo al Jugo", price:8.90},
+    {name:"🍽️ Combinado Especial", price:9.50}
+];
+
+const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
+
+let products = defaultProducts.map((item)=> ({...item}));
+
+function normalizeProductName(name){
+    return String(name || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/^[^\p{L}\p{N}]+/gu, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+}
+
+if(Array.isArray(storedProducts)){
+    storedProducts.forEach((item)=>{
+        if(!item || typeof item.name !== "string") return;
+        const cleanName = item.name.trim();
+        const cleanPrice = Number(item.price);
+        if(!cleanName || Number.isNaN(cleanPrice)) return;
+
+        const normalizedName = normalizeProductName(cleanName);
+        const existingIndex = products.findIndex((p)=> normalizeProductName(p.name) === normalizedName);
+        if(existingIndex >= 0){
+            products[existingIndex].price = cleanPrice;
+        }else{
+            products.push({name:cleanName, price:cleanPrice});
+        }
+    });
+}
+
+products = products.filter((item, index, arr)=>{
+    const key = normalizeProductName(item.name);
+    return index === arr.findIndex((p)=> normalizeProductName(p.name) === key);
+});
+
+function render(){
+    const list = document.getElementById("productList");
+    list.innerHTML="";
+    products.forEach((p)=>{
+        list.innerHTML += `
+            <div class="product">
+                <span class="product-name">${p.name}</span>
+                <span class="price">${p.price.toFixed(2)} €</span>
+            </div>
+        `;
+    });
+    localStorage.setItem("products",JSON.stringify(products));
+}
+
+function addProduct(){
+    const name = document.getElementById("name").value;
+    const price = parseFloat(document.getElementById("price").value);
+    if(name && !Number.isNaN(price)){
+        const normalizedName = normalizeProductName(name);
+        const existingIndex = products.findIndex((p)=> normalizeProductName(p.name) === normalizedName);
+        if(existingIndex >= 0){
+            products[existingIndex].price = price;
+        }else{
+            products.push({name,price});
+        }
+        render();
+        document.getElementById("name").value="";
+        document.getElementById("price").value="";
+    }
+}
+
+function renderRandomBackground(){
+    const bg = document.getElementById("bgIcons");
+    const icons = ["🧁","☕","🍰","🥟","🍪"];
+    const cellSize = 120;
+    const cols = Math.ceil(window.innerWidth / cellSize) + 1;
+    const rows = Math.ceil(window.innerHeight / cellSize) + 1;
+    bg.innerHTML = "";
+
+    for(let row = 0; row < rows; row++){
+        for(let col = 0; col < cols; col++){
+            const item = document.createElement("span");
+            const iconIndex = (row + col) % icons.length;
+            item.textContent = icons[iconIndex];
+            item.style.left = `${(col * cellSize) + (cellSize / 2) - 18}px`;
+            item.style.top = `${(row * cellSize) + (cellSize / 2) - 18}px`;
+            item.style.fontSize = "34px";
+            item.style.opacity = "0.11";
+            item.style.transform = "rotate(0deg)";
+            bg.appendChild(item);
+        }
+    }
+}
+
+document.body.addEventListener("dblclick",()=>{
+    const panel=document.getElementById("adminPanel");
+    panel.style.display = panel.style.display==="none"?"block":"none";
+});
+
+window.addEventListener("resize", renderRandomBackground);
+
+renderRandomBackground();
+render();
+</script>
+
+</body>
+</html>
