@@ -3,14 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1200">
     <title>Delicias Karim - Menú Digital</title>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap"
         rel="stylesheet">
 
     <style>
+        :root {
+            --bg-color: #ffe6f0;
+            --container-bg: rgba(255, 255, 255, 0.75);
+            --card-bg: #ffffff;
+            --text-color: #2d2d2d;
+            --title-color: #d63384;
+            --subtitle-color: #b05a85;
+            --accent-color: #ff6fa3;
+            --card-border: rgba(255, 145, 186, 0.35);
+            --shadow-color: rgba(214, 51, 132, 0.05);
+            --filter-invert: 0;
+        }
+
+        body.dark-mode {
+            --bg-color: #160c11;
+            --container-bg: rgba(30, 18, 24, 0.85);
+            --card-bg: #271720;
+            --text-color: #ffffff;
+            --title-color: #ff9ec4;
+            --subtitle-color: #ffb3cc;
+            --accent-color: #ff4d94;
+            --card-border: rgba(255, 77, 148, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --filter-invert: 1;
+        }
+
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -20,7 +46,8 @@
             align-items: center;
             overflow: auto;
             padding: clamp(8px, 2vh, 24px);
-            background: #ffe6f0;
+            background: var(--bg-color);
+            transition: background 0.4s ease;
             position: relative;
         }
 
@@ -36,6 +63,7 @@
             position: absolute;
             user-select: none;
             filter: grayscale(12%) saturate(0.92);
+            transition: opacity 0.4s ease;
         }
 
         /* Contenedor principal */
@@ -43,14 +71,17 @@
             position: relative;
             z-index: 1;
             width: min(1350px, 96vw);
-            background: linear-gradient(180deg, #fffefe 0%, #fff8fb 100%);
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 50px;
             padding: clamp(14px, 2.2vh, 30px);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
-            border: 12px solid #ff6fa3;
+            box-shadow: 0 30px 70px var(--shadow-color);
+            border: 12px solid var(--accent-color);
             text-align: center;
             box-sizing: border-box;
             overflow: hidden;
+            transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
         }
 
         .menu-container::before {
@@ -58,7 +89,7 @@
             position: absolute;
             inset: 14px;
             border-radius: 34px;
-            border: 1px solid rgba(255, 150, 190, 0.35);
+            border: 1px solid var(--card-border);
             pointer-events: none;
         }
 
@@ -69,11 +100,37 @@
             left: 0;
             right: 0;
             height: 120px;
-            background: linear-gradient(180deg, rgba(255, 111, 163, 0.12) 0%, rgba(255, 111, 163, 0) 100%);
+            background: linear-gradient(180deg, var(--shadow-color) 0%, transparent 100%);
             pointer-events: none;
+            opacity: 0.5;
         }
 
-        /* Logo */
+        /* Logo y Header */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            padding: 10px 20px;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px 16px;
+            transition: all 0.3s;
+            color: var(--text-color);
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
         .logo {
             display: flex;
             justify-content: center;
@@ -88,7 +145,14 @@
             margin-top: clamp(-145px, -15vh, -95px);
             margin-bottom: clamp(-160px, -16vh, -100px);
             mix-blend-mode: multiply;
+            /* Invertir el logo en dark mode si es negro asumiendo q es png */
             filter: saturate(1.05) contrast(1.04) drop-shadow(0 8px 14px rgba(177, 72, 120, 0.14));
+            transition: filter 0.4s;
+        }
+
+        body.dark-mode .logo img {
+            filter: brightness(2) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.5));
+            mix-blend-mode: normal;
         }
 
         .peru-mark {
@@ -110,20 +174,59 @@
         /* Título desayuno */
         .title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(28px, 4.4vh, 50px);
-            color: #d63384;
+            font-size: clamp(45px, 6vh, 65px);
+            color: var(--title-color);
             margin-bottom: 6px;
             letter-spacing: 1px;
-            text-shadow: 0 4px 14px rgba(214, 51, 132, 0.16);
+            text-shadow: 0 4px 14px var(--shadow-color);
+            transition: color 0.4s;
         }
 
         .subtitle {
-            font-size: clamp(12px, 1.5vh, 16px);
+            font-size: clamp(18px, 2vh, 22px);
             font-weight: 500;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: #b05a85;
-            margin-bottom: 12px;
+            color: var(--subtitle-color);
+            margin-bottom: 24px;
+            transition: color 0.4s;
+        }
+
+        /* Categorías (Tabs) */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            color: var(--title-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 30px;
+            padding: 10px 24px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px var(--shadow-color);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
         }
 
         /* Productos */
@@ -148,24 +251,30 @@
         }
 
         .product {
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             text-align: center;
-            font-size: clamp(14px, 2vh, 18px);
             gap: 0;
             padding: 0;
-            border: none;
+            border: 2px solid var(--card-border);
             border-radius: 24px;
-            background: #ffffff;
-            box-shadow: 0 8px 24px rgba(214, 51, 132, 0.08);
+            background: var(--card-bg);
+            box-shadow: 0 6px 18px var(--shadow-color);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             height: 100%;
             overflow: hidden;
             box-sizing: border-box;
             opacity: 0;
             animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .product:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 14px 30px var(--shadow-color);
         }
 
         .product-img {
@@ -179,65 +288,21 @@
         }
 
         .product-name {
-            font-size: clamp(15px, 2vh, 19px);
+            font-size: clamp(20px, 2.5vh, 24px);
             font-weight: 700;
             letter-spacing: 0.2px;
-            color: #2d2d2d;
+            color: var(--text-color);
             line-height: 1.3;
             padding: 0 16px;
             margin-bottom: 12px;
             flex-grow: 1;
             display: flex;
             align-items: center;
-        }
-
-        @media (max-width: 640px) {
-            .menu-container {
-                border-width: 8px;
-                border-radius: 28px;
-            }
-
-            .title {
-                margin-bottom: 22px;
-            }
-        }
-
-        @media (max-height: 900px) {
-            .menu-container {
-                padding: 12px 18px;
-                border-width: 10px;
-            }
-
-            .logo img {
-                width: clamp(280px, 40vh, 400px);
-                margin-top: clamp(-100px, -11vh, -70px);
-                margin-bottom: clamp(-112px, -12vh, -74px);
-            }
-
-            .title {
-                font-size: clamp(24px, 4vh, 38px);
-                margin-bottom: 10px;
-            }
-
-            .product {
-                font-size: clamp(12px, 1.8vh, 16px);
-                padding: 10px;
-                border-radius: 18px;
-            }
-
-            .footer {
-                margin-top: 10px;
-                font-size: 12px;
-            }
-        }
-
-        .product:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 36px rgba(214, 51, 132, 0.18);
+            transition: color 0.3s;
         }
 
         .product:hover .product-name {
-            color: #d63384;
+            color: var(--accent-color);
         }
 
         .price {
@@ -245,49 +310,81 @@
             font-weight: 600;
             letter-spacing: 0.5px;
             color: #ffffff;
-            background: linear-gradient(135deg, #ff6fa3 0%, #ff3d8d 100%);
-            padding: 5px 20px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #ff3d8d 100%);
+            padding: 6px 22px;
+            border-radius: 24px;
             white-space: nowrap;
             flex-shrink: 0;
-            font-size: clamp(14px, 1.8vh, 17px);
-            box-shadow: 0 4px 14px rgba(255, 61, 141, 0.28);
+            font-size: clamp(18px, 2.2vh, 22px);
+            box-shadow: 0 4px 14px var(--shadow-color);
             margin-bottom: 20px;
             margin-top: auto;
+            transition: transform 0.2s;
+        }
+
+        /* Botón Flotante WhatsApp */
+        .fab-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 16px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fab-whatsapp:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 14px 32px rgba(37, 211, 102, 0.5);
+            color: white;
+        }
+
+        .fab-icon {
+            font-size: 28px;
+            line-height: 1;
         }
 
         /* Panel admin */
         .admin-panel {
             margin-top: 35px;
             display: none;
+            color: var(--text-color);
         }
 
         input {
             padding: 10px;
             margin: 5px;
             border-radius: 12px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--card-border);
             font-size: 16px;
+            background: var(--card-bg);
+            color: var(--text-color);
         }
 
-        button {
+        button.admin-btn {
             padding: 10px 15px;
             border: none;
             border-radius: 12px;
-            background: #ff3d8d;
+            background: var(--accent-color);
             color: white;
             cursor: pointer;
             font-size: 15px;
         }
 
-        button:hover {
-            background: #e60073;
-        }
-
         .footer {
             margin-top: 25px;
             font-size: 14px;
-            color: #999;
+            color: var(--subtitle-color);
         }
     </style>
 </head>
@@ -297,6 +394,10 @@
     <div class="bg-icons" id="bgIcons"></div>
 
     <div class="menu-container">
+
+        <div class="header-top">
+            <button class="theme-toggle" id="themeBtn" title="Cambiar Tema">🌙</button>
+        </div>
 
         <div class="logo">
             <img src="logo.png" alt="Delicias Karim">
@@ -308,13 +409,21 @@
         <div class="title">Desayunos Peruanos</div>
         <div class="subtitle">Sabor casero • Recién servido</div>
 
+        <div class="category-tabs" id="categoryTabs">
+            <button class="tab-btn active" onclick="filterCategory('Todos')">✨ Todos</button>
+            <button class="tab-btn" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
+            <button class="tab-btn" onclick="filterCategory('Caldos')">🍲 Caldos</button>
+            <button class="tab-btn" onclick="filterCategory('Especiales')">🔥 Especiales</button>
+            <button class="tab-btn" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
+        </div>
+
         <div id="productList"></div>
 
         <div class="admin-panel" id="adminPanel">
             <h3>Panel Administrador</h3>
             <input type="text" id="name" placeholder="Producto">
             <input type="number" id="price" placeholder="Precio €">
-            <button onclick="addProduct()">Añadir</button>
+            <button class="admin-btn" onclick="addProduct()">Añadir</button>
         </div>
 
         <div class="footer">
@@ -323,33 +432,40 @@
 
     </div>
 
+    <a href="https://wa.me/34600000000?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
+        class="fab-whatsapp" target="_blank" rel="noopener noreferrer">
+        <span class="fab-icon">💬</span> Hacer Pedido
+    </a>
+
     <script>
         const defaultProducts = [
-            { name: "Pan con Chicharrón", price: 8.00, img: "pan_chicharron.PNG" },
-            { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop" },
-            { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG" },
-            { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG" },
-            { name: "Pollo Broaster", price: 14.00, img: "pollo_broster.PNG" },
-            { name: "Combinado", price: 5.00, img: "combinado.PNG" },
-            { name: "Torta Helada", price: 4.00, img: "tarta_helada.PNG" },
-            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop" },
-            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop" },
-            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop" },
-            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop" },
-            { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop" },
-            { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop" },
-            { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop" },
-            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop" },
-            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&h=300&fit=crop" },
-            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop" },
-            { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?w=400&h=300&fit=crop" },
-            { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop" },
-            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop" }
+            { name: "Pan con Chicharrón", price: 8.00, img: "pan_chicharron.PNG", category: "Sándwiches" },
+            { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG", category: "Sándwiches" },
+            { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG", category: "Sándwiches" },
+            { name: "Pollo Broaster", price: 14.00, img: "pollo_broster.PNG", category: "Especiales" },
+            { name: "Combinado", price: 5.00, img: "combinado.PNG", category: "Especiales" },
+            { name: "Torta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Bebidas" },
+            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Bebidas" }
         ];
 
-        if (!localStorage.getItem("menu_version_8")) {
+        let currentCategory = 'Todos';
+
+        if (!localStorage.getItem("menu_version_15")) {
             localStorage.removeItem("products");
-            localStorage.setItem("menu_version_8", "true");
+            localStorage.setItem("menu_version_15", "true");
         }
 
         const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -400,7 +516,7 @@
                         products[existingIndex].price = cleanPrice;
                     }
                 } else {
-                    products.push({ name: cleanName, price: cleanPrice, img: item.img });
+                    products.push({ name: cleanName, price: cleanPrice, img: item.img, category: "Especiales" });
                 }
             });
         }
@@ -410,10 +526,29 @@
             return index === arr.findIndex((p) => normalizeProductName(p.name) === key);
         });
 
+        function filterCategory(category) {
+            currentCategory = category;
+
+            // Actualizar clases de botones
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                if (btn.innerText.includes(category)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            render();
+        }
+
         function render() {
             const list = document.getElementById("productList");
             list.innerHTML = "";
-            products.forEach((p, index) => {
+
+            const filteredProducts = currentCategory === 'Todos' ? products : products.filter(p => p.category === currentCategory || (!p.category && currentCategory === 'Especiales'));
+
+            filteredProducts.forEach((p, index) => {
                 const imgUrl = p.img ? p.img : `https://picsum.photos/seed/${encodeURIComponent(p.name)}/100/100`;
                 const delay = (index * 0.04).toFixed(2);
                 list.innerHTML += `
@@ -437,7 +572,7 @@
                 if (existingIndex >= 0) {
                     products[existingIndex].price = price;
                 } else {
-                    products.push({ name: canonicalName, price });
+                    products.push({ name: canonicalName, price, category: "Especiales" });
                 }
                 render();
                 document.getElementById("name").value = "";
@@ -479,6 +614,28 @@
         document.body.addEventListener("dblclick", () => {
             const panel = document.getElementById("adminPanel");
             panel.style.display = panel.style.display === "none" ? "block" : "none";
+        });
+
+        // Dark Mode Logic
+        const themeBtn = document.getElementById('themeBtn');
+        let isDarkMode = localStorage.getItem('dark_mode') === 'true';
+
+        function applyTheme() {
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                themeBtn.textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeBtn.textContent = '🌙';
+            }
+        }
+
+        applyTheme();
+
+        themeBtn.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('dark_mode', isDarkMode);
+            applyTheme();
         });
 
         window.addEventListener("resize", renderRandomBackground);
