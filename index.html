@@ -564,18 +564,15 @@
 
         .modal-img {
             width: 100%;
-            height: 60vh;
-            max-height: 65vh;
-            object-fit: cover;
+            max-height: calc(100vh - 220px);
+            object-fit: contain;
             border-bottom: 2px solid #f0f0f0;
             cursor: zoom-in;
         }
 
         .modal-body {
-            padding: 28px 28px 30px;
+            padding: 30px;
             text-align: left;
-            overflow-y: auto;
-            max-height: calc(92vh - 60vh - 90px);
         }
 
         .modal-title {
