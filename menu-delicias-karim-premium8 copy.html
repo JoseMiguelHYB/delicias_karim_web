@@ -299,7 +299,7 @@
             border-color: var(--brand-pink);
         }
 
-        .tab-btn[data-cat="sandwiches"] {
+        .tab-btn[data-cat="panes"] {
             color: #27ae60;
             border-color: #27ae60;
         }
@@ -324,12 +324,22 @@
             border-color: #a0522d;
         }
 
+        .tab-btn[data-cat="segundos"] {
+            color: #d35400;
+            border-color: #d35400;
+        }
+
+        .tab-btn[data-cat="dulces"] {
+            color: #00a8b5;
+            border-color: #00a8b5;
+        }
+
         /* Colores específicos para cada botón (Activos) */
         .tab-btn[data-cat="todos"].active {
             background: var(--brand-pink);
         }
 
-        .tab-btn[data-cat="sandwiches"].active {
+        .tab-btn[data-cat="panes"].active {
             background: #27ae60;
         }
 
@@ -349,6 +359,14 @@
             background: #a0522d;
         }
 
+        .tab-btn[data-cat="segundos"].active {
+            background: #d35400;
+        }
+
+        .tab-btn[data-cat="dulces"].active {
+            background: #00a8b5;
+        }
+
         /* Definición de colores por Categoría (Se aplican al seleccionar una) */
         .product {
             --item-primary: var(--brand-pink);
@@ -356,7 +374,7 @@
             --item-border: var(--brand-pink-soft);
         }
 
-        body[data-category="Sándwiches"] .product {
+        body[data-category="Panes"] .product {
             --item-primary: #27ae60;
             --item-bg: #e9f7ef;
             --item-border: #bad9c7;
@@ -384,6 +402,18 @@
             --item-primary: #a0522d;
             --item-bg: #fff8dc;
             --item-border: #deb887;
+        }
+
+        body[data-category="Segundos Criollos"] .product {
+            --item-primary: #d35400;
+            --item-bg: #fdf2e9;
+            --item-border: #edbb99;
+        }
+
+        body[data-category="Dulces Peruanos"] .product {
+            --item-primary: #00a8b5;
+            --item-bg: #e0f7f9;
+            --item-border: #b2ebf2;
         }
 
         /* Productos */
@@ -572,19 +602,29 @@
         }
 
         .modal-order-btn {
-            background: var(--item-primary);
-            color: white;
-            padding: 14px 30px;
-            border-radius: 30px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #ffffff;
+            padding: 16px 36px;
+            border-radius: 40px;
             text-decoration: none;
             font-weight: 700;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
         }
 
         .modal-order-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .modal-order-btn:active {
+            transform: scale(0.98);
         }
 
         .price {
@@ -611,7 +651,7 @@
             border-color: transparent;
         }
 
-        .tab-btn[data-cat="sandwiches"].active {
+        .tab-btn[data-cat="panes"].active {
             background: #27ae60;
             color: #fff;
             border-color: transparent;
@@ -619,6 +659,12 @@
 
         .tab-btn[data-cat="caldos"].active {
             background: #e67e22;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="segundos"].active {
+            background: #d35400;
             color: #fff;
             border-color: transparent;
         }
@@ -631,6 +677,18 @@
 
         .tab-btn[data-cat="bebidas"].active {
             background: #8e44ad;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="tartas"].active {
+            background: #a0522d;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="dulces"].active {
+            background: #00a8b5;
             color: #fff;
             border-color: transparent;
         }
@@ -697,9 +755,17 @@
         }
 
         .footer {
-            margin-top: 25px;
+            margin-top: 40px;
+            padding: 20px 0;
+            text-align: center;
             font-size: 14px;
             color: var(--subtitle-color);
+            border-top: 1px solid var(--brand-pink-soft);
+            width: 100%;
+        }
+
+        .footer strong {
+            color: var(--brand-pink);
         }
 
         .info-section {
@@ -811,12 +877,15 @@
 
         <div class="category-tabs" id="categoryTabs">
             <button class="tab-btn active" data-cat="todos" onclick="filterCategory('Todos')">✨ Todos</button>
-            <button class="tab-btn" data-cat="sandwiches" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
-            <button class="tab-btn" data-cat="caldos" data-active-color="#2ecc71" onclick="filterCategory('Caldos')">🍲
-                Caldos</button>
-            <button class="tab-btn" data-cat="especiales" onclick="filterCategory('Especiales')">🔥 Especiales</button>
-            <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
+            <button class="tab-btn" data-cat="panes" onclick="filterCategory('Panes')">🥪 Panes</button>
+            <button class="tab-btn" data-cat="caldos" onclick="filterCategory('Caldos')">🍲 Caldos</button>
+            <button class="tab-btn" data-cat="segundos" onclick="filterCategory('Segundos Criollos')">🥘 Segundos
+                Criollos</button>
+            <button class="tab-btn" data-cat="especiales" onclick="filterCategory('Especiales')">👑 Especiales</button>
+            <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">🥤 Bebidas</button>
             <button class="tab-btn" data-cat="tartas" onclick="filterCategory('Tartas')">🍰 Tartas</button>
+            <button class="tab-btn" data-cat="dulces" onclick="filterCategory('Dulces Peruanos')">🍭 Dulces
+                Peruanos</button>
         </div>
 
         <div id="productList"></div>
@@ -867,7 +936,9 @@
         </div>
 
         <div class="footer">
-            José Miguel Castro Huayllas
+            <p>Plataforma diseñada y desarrollada por <strong>José Miguel Castro Huayllas</strong></p>
+            <p style="font-size: 12px; margin-top: 8px; opacity: 0.7;">© 2026 Todos los derechos reservados • Software
+                Developer</p>
         </div>
 
     </div>
@@ -882,7 +953,7 @@
                 <h2 class="modal-title" id="modalTitle">Nombre del Producto</h2>
                 <div class="modal-data">
                     <span class="modal-price-tag" id="modalPrice">0.00 €</span>
-                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">💬 Pedir Ahora</a>
+                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">¡Lo quiero! 💬</a>
                 </div>
             </div>
         </div>
@@ -895,32 +966,41 @@
 
     <script>
         const defaultProducts = [
-            { name: "Pan con Chicharrón", price: 8.00, img: "pan_chicharron.PNG", category: "Sándwiches" },
-            { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG", category: "Sándwiches" },
-            { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG", category: "Sándwiches" },
+            { name: "Pan con Chicharrón", price: 8.00, img: "pan_chicharron.PNG", category: "Panes" },
+            { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG", category: "Panes" },
+            { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG", category: "Panes" },
             { name: "Pollo Broaster", price: 14.00, img: "pollo_broster.PNG", category: "Especiales" },
-            { name: "Combinado", price: 5.00, img: "combinado.PNG", category: "Especiales" },
-            { name: "Torta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Bebidas" },
-            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Combinado", price: 5.00, img: "combinado.PNG", category: "Segundos Criollos" },
+            { name: "Tarta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Tartas" },
+            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop", category: "Segundos Criollos" },
             { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Caldo de Patasca", price: 12.00, img: "https://images.unsplash.com/photo-1548943487-a2e4b43b5930?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Aguadito", price: 8.00, img: "https://images.unsplash.com/photo-1625938144755-652e08e359b7?w=400&h=300&fit=crop", category: "Caldos" },
-            { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Segundos Criollos" },
+            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&h=300&fit=crop", category: "Segundos Criollos" },
+            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?w=400&h=300&fit=crop", category: "Bebidas" },
             { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop", category: "Bebidas" },
             { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop", category: "Bebidas" },
             { name: "Tarta de Chocolate", price: 4.50, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop", category: "Tartas" },
             { name: "Keke de Vainilla", price: 3.50, img: "https://images.unsplash.com/photo-1518047601542-79f18c655718?w=400&h=300&fit=crop", category: "Tartas" },
             { name: "Tres Leches", price: 4.50, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop", category: "Tartas" },
-            { name: "Pie de Limón", price: 4.00, img: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=400&h=300&fit=crop", category: "Tartas" }
+            { name: "Pie de Limón", price: 4.00, img: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=400&h=300&fit=crop", category: "Tartas" },
+            { name: "Pachamanca 3 Carnes", price: 12.00, img: "https://images.unsplash.com/photo-1544025162-d4464974ad65?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Lomo Saltado Premium", price: 12.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Seco de Cordero", price: 12.00, img: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Ají de Gallina", price: 12.00, img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Ceviche Mixto", price: 12.00, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Cua Cua", price: 1.50, img: "https://picsum.photos/seed/cuacua/400/300", category: "Dulces Peruanos" },
+            { name: "Doña Pepa", price: 1.50, img: "https://picsum.photos/seed/donapepa/400/300", category: "Dulces Peruanos" },
+            { name: "Sublime", price: 2.00, img: "https://picsum.photos/seed/sublime/400/300", category: "Dulces Peruanos" },
+            { name: "Besos de Moza", price: 2.50, img: "https://picsum.photos/seed/besos/400/300", category: "Dulces Peruanos" }
         ];
 
         let currentCategory = 'Todos';
