@@ -561,9 +561,10 @@
 
         .modal-img {
             width: 100%;
-            max-height: 450px;
-            object-fit: cover;
+            max-height: calc(100vh - 220px);
+            object-fit: contain;
             border-bottom: 2px solid #f0f0f0;
+            cursor: zoom-in;
         }
 
         .modal-body {
@@ -1141,6 +1142,22 @@
             document.getElementById('productModal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
+
+        // Permite ver la imagen del producto a tamaño completo al tocarla
+        document.getElementById('modalImg').addEventListener('click', () => {
+            const img = document.getElementById('modalImg');
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+                return;
+            }
+            if (img.requestFullscreen) {
+                img.requestFullscreen().catch(() => {});
+            } else if (img.webkitRequestFullscreen) {
+                img.webkitRequestFullscreen();
+            } else {
+                window.open(img.src, '_blank');
+            }
+        });
 
         function addProduct() {
             const name = document.getElementById("name").value;
