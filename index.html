@@ -12,21 +12,65 @@
 
     <style>
         :root {
-            --bg-color: #ffe6f0;
-            --container-bg: rgba(255, 255, 255, 0.75);
+            /* Paleta base (marca Karim) */
+            --brand-pink: #E94E77;
+            --brand-pink-soft: #F8BBD0;
+            --brand-cream: #FFF5F7;
+            --brand-beige: #F3E5D8;
+            --brand-text: #2E2E2E;
+
+            /* Variables dinámicas por defecto (se sobreescriben por categoría) */
+            --cat-primary: var(--brand-pink);
+            --cat-secondary: #d63384;
+            --cat-bg: #ffffff;
+            --cat-border: var(--brand-pink-soft);
+
+            --bg-color: var(--brand-cream);
+            --container-bg: rgba(255, 255, 255, 0.85);
             --card-bg: #ffffff;
-            --text-color: #2d2d2d;
-            --title-color: #d63384;
+            --text-color: var(--brand-text);
+            --title-color: var(--brand-pink);
             --subtitle-color: #b05a85;
-            --accent-color: #ff6fa3;
-            --card-border: rgba(255, 145, 186, 0.35);
-            --shadow-color: rgba(214, 51, 132, 0.05);
+            --accent-color: var(--brand-pink);
+            --card-border: var(--brand-pink-soft);
+            --shadow-color: rgba(233, 78, 119, 0.1);
             --filter-invert: 0;
+        }
+
+        /* Definición de Paletas por Categoría (Versión Vibrante) */
+        body[data-category="Todos"] {
+            --cat-primary: var(--brand-pink);
+            --cat-bg: #ffffff;
+            --cat-border: var(--brand-pink-soft);
+        }
+
+        body[data-category="Sándwiches"] {
+            --cat-primary: #27ae60;
+            --cat-bg: #e9f7ef;
+            --cat-border: #bad9c7;
+        }
+
+        body[data-category="Caldos"] {
+            --cat-primary: #e67e22;
+            --cat-bg: #fef5e7;
+            --cat-border: #f5d5a9;
+        }
+
+        body[data-category="Especiales"] {
+            --cat-primary: #c0392b;
+            --cat-bg: #f9ebea;
+            --cat-border: #f2d4d1;
+        }
+
+        body[data-category="Bebidas"] {
+            --cat-primary: #8e44ad;
+            --cat-bg: #f4ecf7;
+            --cat-border: #d7bde2;
         }
 
         body.dark-mode {
             --bg-color: #160c11;
-            --container-bg: rgba(30, 18, 24, 0.85);
+            --container-bg: rgba(30, 18, 24, 0.9);
             --card-bg: #271720;
             --text-color: #ffffff;
             --title-color: #ff9ec4;
@@ -176,11 +220,16 @@
         .title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(45px, 6vh, 65px);
-            color: var(--title-color);
+            color: #1a1a1a;
             margin-bottom: 6px;
             letter-spacing: 1px;
-            text-shadow: 0 4px 14px var(--shadow-color);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
             transition: color 0.4s;
+        }
+
+        body.dark-mode .title {
+            color: #f0f0f0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .subtitle {
@@ -241,10 +290,34 @@
         }
 
         .tab-btn.active {
-            background: var(--accent-color);
-            color: #ffffff;
-            border-color: var(--accent-color);
+            color: #ffffff !important;
         }
+
+        /* Colores específicos para cada botón (Inactivos) */
+        .tab-btn[data-cat="todos"] { color: var(--brand-pink); border-color: var(--brand-pink); }
+        .tab-btn[data-cat="sandwiches"] { color: #27ae60; border-color: #27ae60; }
+        .tab-btn[data-cat="caldos"] { color: #e67e22; border-color: #e67e22; }
+        .tab-btn[data-cat="especiales"] { color: #c0392b; border-color: #c0392b; }
+        .tab-btn[data-cat="bebidas"] { color: #8e44ad; border-color: #8e44ad; }
+
+        /* Colores específicos para cada botón (Activos) */
+        .tab-btn[data-cat="todos"].active { background: var(--brand-pink); }
+        .tab-btn[data-cat="sandwiches"].active { background: #27ae60; }
+        .tab-btn[data-cat="caldos"].active { background: #e67e22; }
+        .tab-btn[data-cat="especiales"].active { background: #c0392b; }
+        .tab-btn[data-cat="bebidas"].active { background: #8e44ad; }
+
+        /* Definición de colores por Categoría (Se aplican al seleccionar una) */
+        .product {
+            --item-primary: var(--brand-pink);
+            --item-bg: #ffffff;
+            --item-border: var(--brand-pink-soft);
+        }
+
+        body[data-category="Sándwiches"] .product { --item-primary: #27ae60; --item-bg: #e9f7ef; --item-border: #bad9c7; }
+        body[data-category="Caldos"] .product { --item-primary: #e67e22; --item-bg: #fef5e7; --item-border: #f5d5a9; }
+        body[data-category="Especiales"] .product { --item-primary: #c0392b; --item-bg: #f9ebea; --item-border: #f2d4d1; }
+        body[data-category="Bebidas"] .product { --item-primary: #8e44ad; --item-bg: #f4ecf7; --item-border: #d7bde2; }
 
         /* Productos */
         #productList {
@@ -276,9 +349,9 @@
             text-align: center;
             gap: 0;
             padding: 0;
-            border: 2px solid var(--card-border);
+            border: 2px solid var(--item-border);
             border-radius: 24px;
-            background: var(--card-bg);
+            background: var(--item-bg);
             box-shadow: 0 6px 18px var(--shadow-color);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             height: 100%;
@@ -290,7 +363,7 @@
 
         .product:hover {
             transform: translateY(-8px);
-            border-color: var(--accent-color);
+            border-color: var(--item-primary);
             box-shadow: 0 14px 30px var(--shadow-color);
         }
 
@@ -308,7 +381,7 @@
             font-size: clamp(20px, 2.5vh, 24px);
             font-weight: 700;
             letter-spacing: 0.2px;
-            color: var(--text-color);
+            color: #1a1a1a;
             line-height: 1.3;
             padding: 0 16px;
             margin-bottom: 12px;
@@ -319,16 +392,123 @@
         }
 
         .product:hover .product-name {
-            color: var(--accent-color);
+            color: var(--item-primary);
+        }
+
+        /* Premium Modal Styles */
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content {
+            background: #fff;
+            max-width: 600px;
+            width: 95%;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+            border: 8px solid var(--item-border);
+            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideIn { from { transform: translateY(50px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            z-index: 10000;
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-body { 
+            padding: 30px;
+            text-align: left;
+        }
+        
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vh, 36px);
+            margin: 0 0 10px 0;
+            color: #1a1a1a;
+        }
+
+        .modal-category-text {
+            display: inline-block;
+            color: var(--item-primary);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .modal-data {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .modal-price-tag {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--brand-pink);
+        }
+
+        .modal-order-btn {
+            background: var(--item-primary);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .modal-order-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.2);
         }
 
         .price {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 0.5px;
             color: #ffffff;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff3d8d 100%);
-            padding: 6px 22px;
+            background: var(--item-primary);
+            padding: 7px 24px;
             border-radius: 24px;
             white-space: nowrap;
             flex-shrink: 0;
@@ -336,7 +516,38 @@
             box-shadow: 0 4px 14px var(--shadow-color);
             margin-bottom: 20px;
             margin-top: auto;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+        }
+
+        /* Colores individuales para los botones de categorías (Tabs) cuando están activos */
+        .tab-btn[data-cat="todos"].active {
+            background: var(--brand-pink);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="sandwiches"].active {
+            background: #27ae60;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="caldos"].active {
+            background: #e67e22;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="especiales"].active {
+            background: #c0392b;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="bebidas"].active {
+            background: #8e44ad;
+            color: #fff;
+            border-color: transparent;
         }
 
         /* Botón Flotante WhatsApp */
@@ -512,11 +723,12 @@
         <div><span class="date-badge" id="currentDate"></span></div>
 
         <div class="category-tabs" id="categoryTabs">
-            <button class="tab-btn active" onclick="filterCategory('Todos')">✨ Todos</button>
-            <button class="tab-btn" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
-            <button class="tab-btn" onclick="filterCategory('Caldos')">🍲 Caldos</button>
-            <button class="tab-btn" onclick="filterCategory('Especiales')">🔥 Especiales</button>
-            <button class="tab-btn" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
+            <button class="tab-btn active" data-cat="todos" onclick="filterCategory('Todos')">✨ Todos</button>
+            <button class="tab-btn" data-cat="sandwiches" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
+            <button class="tab-btn" data-cat="caldos" data-active-color="#2ecc71" onclick="filterCategory('Caldos')">🍲
+                Caldos</button>
+            <button class="tab-btn" data-cat="especiales" onclick="filterCategory('Especiales')">🔥 Especiales</button>
+            <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
         </div>
 
         <div id="productList"></div>
@@ -545,12 +757,15 @@
                 <div class="info-card" style="flex:1;">
                     <div class="info-icon">📍</div>
                     <div class="info-title">¿Dónde Estamos?</div>
-                    <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.223607478837!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI1JzAwLjQiTiAzwrA0MicxMy42Ilc!5e0!3m2!1ses!2ses!4v1600000000000" allowfullscreen loading="lazy"></iframe>
+                    <iframe class="map-embed"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.223607478837!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI1JzAwLjQiTiAzwrA0MicxMy42Ilc!5e0!3m2!1ses!2ses!4v1600000000000"
+                        allowfullscreen loading="lazy"></iframe>
                     <div class="info-text">
                         Calle de Ejemplo, 123<br>
                         Madrid, España
                     </div>
-                    <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver en Google Maps</a>
+                    <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver
+                        en Google Maps</a>
                 </div>
             </div>
         </div>
@@ -566,6 +781,22 @@
             José Miguel Castro Huayllas
         </div>
 
+    </div>
+
+    <!-- Modal de Producto -->
+    <div class="product-modal" id="productModal" onclick="if(event.target === this) closeProductModal()">
+        <div class="modal-content" id="modalContainer">
+            <button class="modal-close" onclick="closeProductModal()">×</button>
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-body">
+                <span class="modal-category-text" id="modalCategory">Sándwiches</span>
+                <h2 class="modal-title" id="modalTitle">Nombre del Producto</h2>
+                <div class="modal-data">
+                    <span class="modal-price-tag" id="modalPrice">0.00 €</span>
+                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">💬 Pedir Ahora</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <a href="https://wa.me/34600000000?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
@@ -667,6 +898,9 @@
         function filterCategory(category) {
             currentCategory = category;
 
+            // Actualizar atributo en el body para CSS dinámico
+            document.body.setAttribute('data-category', category === 'Bebidas & Postres' ? 'Bebidas' : category);
+
             // Actualizar clases de botones
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => {
@@ -690,7 +924,7 @@
                 const imgUrl = p.img ? p.img : `https://picsum.photos/seed/${encodeURIComponent(p.name)}/100/100`;
                 const delay = (index * 0.04).toFixed(2);
                 list.innerHTML += `
-            <div class="product" style="animation-delay: ${delay}s">
+            <div class="product" data-cat="${p.category || ''}" style="animation-delay: ${delay}s" onclick="openProductModal('${p.name}')">
                 <img src="${imgUrl}" alt="${p.name}" class="product-img" onerror="this.src='https://picsum.photos/seed/food/100/100'">
                 <span class="product-name">${p.name}</span>
                 <span class="price">${p.price.toFixed(2)} €</span>
@@ -698,6 +932,40 @@
         `;
             });
             localStorage.setItem("products", JSON.stringify(products));
+        }
+
+        // Funciones del Modal
+        function openProductModal(productName) {
+            const product = products.find(p => p.name === productName);
+            if (!product) return;
+
+            const modal = document.getElementById('productModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalPrice = document.getElementById('modalPrice');
+            const modalCategory = document.getElementById('modalCategory');
+            const modalOrderBtn = document.getElementById('modalOrderBtn');
+            const modalContainer = document.getElementById('modalContainer');
+
+            modalImg.src = product.img || `https://picsum.photos/seed/${encodeURIComponent(product.name)}/100/100`;
+            modalTitle.innerText = product.name;
+            modalPrice.innerText = `${product.price.toFixed(2)} €`;
+            modalCategory.innerText = product.category;
+            
+            // Link de WhatsApp personalizado
+            const msg = encodeURIComponent(`¡Hola! Me gustaría pedir un "${product.name}" del Menú Digital.`);
+            modalOrderBtn.href = `https://wa.me/34600000000?text=${msg}`;
+
+            // Aplicar colores de categoría al modal
+            modalContainer.setAttribute('data-cat', product.category);
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Evitar scroll al ver modal
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
         function addProduct() {
@@ -788,6 +1056,7 @@
 
         updateDate();
         renderRandomBackground();
+        filterCategory('Todos');
         render();
     </script>
 

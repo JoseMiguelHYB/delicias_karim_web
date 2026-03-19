@@ -12,21 +12,65 @@
 
     <style>
         :root {
-            --bg-color: #ffe6f0;
-            --container-bg: rgba(255, 255, 255, 0.75);
+            /* Paleta base (marca Karim) */
+            --brand-pink: #E94E77;
+            --brand-pink-soft: #F8BBD0;
+            --brand-cream: #FFF5F7;
+            --brand-beige: #F3E5D8;
+            --brand-text: #2E2E2E;
+
+            /* Variables dinámicas por defecto (se sobreescriben por categoría) */
+            --cat-primary: var(--brand-pink);
+            --cat-secondary: #d63384;
+            --cat-bg: #ffffff;
+            --cat-border: var(--brand-pink-soft);
+
+            --bg-color: var(--brand-cream);
+            --container-bg: rgba(255, 255, 255, 0.85);
             --card-bg: #ffffff;
-            --text-color: #2d2d2d;
-            --title-color: #d63384;
+            --text-color: var(--brand-text);
+            --title-color: var(--brand-pink);
             --subtitle-color: #b05a85;
-            --accent-color: #ff6fa3;
-            --card-border: rgba(255, 145, 186, 0.35);
-            --shadow-color: rgba(214, 51, 132, 0.05);
+            --accent-color: var(--brand-pink);
+            --card-border: var(--brand-pink-soft);
+            --shadow-color: rgba(233, 78, 119, 0.1);
             --filter-invert: 0;
+        }
+
+        /* Definición de Paletas por Categoría (Versión Vibrante) */
+        body[data-category="Todos"] {
+            --cat-primary: var(--brand-pink);
+            --cat-bg: #ffffff;
+            --cat-border: var(--brand-pink-soft);
+        }
+
+        body[data-category="Sándwiches"] {
+            --cat-primary: #27ae60;
+            --cat-bg: #e9f7ef;
+            --cat-border: #bad9c7;
+        }
+
+        body[data-category="Caldos"] {
+            --cat-primary: #e67e22;
+            --cat-bg: #fef5e7;
+            --cat-border: #f5d5a9;
+        }
+
+        body[data-category="Especiales"] {
+            --cat-primary: #c0392b;
+            --cat-bg: #f9ebea;
+            --cat-border: #f2d4d1;
+        }
+
+        body[data-category="Bebidas"] {
+            --cat-primary: #8e44ad;
+            --cat-bg: #f4ecf7;
+            --cat-border: #d7bde2;
         }
 
         body.dark-mode {
             --bg-color: #160c11;
-            --container-bg: rgba(30, 18, 24, 0.85);
+            --container-bg: rgba(30, 18, 24, 0.9);
             --card-bg: #271720;
             --text-color: #ffffff;
             --title-color: #ff9ec4;
@@ -151,8 +195,9 @@
         }
 
         body.dark-mode .logo img {
-            filter: brightness(2) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.5));
+            filter: saturate(1.1) contrast(1.05) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.5));
             mix-blend-mode: normal;
+            clip-path: circle(46% at 50% 50%);
         }
 
         .peru-mark {
@@ -175,11 +220,16 @@
         .title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(45px, 6vh, 65px);
-            color: var(--title-color);
+            color: #1a1a1a;
             margin-bottom: 6px;
             letter-spacing: 1px;
-            text-shadow: 0 4px 14px var(--shadow-color);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
             transition: color 0.4s;
+        }
+
+        body.dark-mode .title {
+            color: #f0f0f0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .subtitle {
@@ -188,8 +238,24 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--subtitle-color);
-            margin-bottom: 24px;
+            margin-bottom: 12px;
             transition: color 0.4s;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: var(--card-bg);
+            color: var(--title-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(14px, 1.8vh, 18px);
+            font-weight: 600;
+            padding: 8px 24px;
+            border-radius: 30px;
+            margin-bottom: 26px;
+            border: 2px solid var(--card-border);
+            box-shadow: 0 4px 10px var(--shadow-color);
+            letter-spacing: 0.5px;
+            transition: background 0.4s, border-color 0.4s, color 0.4s, box-shadow 0.4s;
         }
 
         /* Categorías (Tabs) */
@@ -224,9 +290,85 @@
         }
 
         .tab-btn.active {
-            background: var(--accent-color);
-            color: #ffffff;
-            border-color: var(--accent-color);
+            color: #ffffff !important;
+        }
+
+        /* Colores específicos para cada botón (Inactivos) */
+        .tab-btn[data-cat="todos"] {
+            color: var(--brand-pink);
+            border-color: var(--brand-pink);
+        }
+
+        .tab-btn[data-cat="sandwiches"] {
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .tab-btn[data-cat="caldos"] {
+            color: #e67e22;
+            border-color: #e67e22;
+        }
+
+        .tab-btn[data-cat="especiales"] {
+            color: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .tab-btn[data-cat="bebidas"] {
+            color: #8e44ad;
+            border-color: #8e44ad;
+        }
+
+        /* Colores específicos para cada botón (Activos) */
+        .tab-btn[data-cat="todos"].active {
+            background: var(--brand-pink);
+        }
+
+        .tab-btn[data-cat="sandwiches"].active {
+            background: #27ae60;
+        }
+
+        .tab-btn[data-cat="caldos"].active {
+            background: #e67e22;
+        }
+
+        .tab-btn[data-cat="especiales"].active {
+            background: #c0392b;
+        }
+
+        .tab-btn[data-cat="bebidas"].active {
+            background: #8e44ad;
+        }
+
+        /* Definición de colores por Categoría (Se aplican al seleccionar una) */
+        .product {
+            --item-primary: var(--brand-pink);
+            --item-bg: #ffffff;
+            --item-border: var(--brand-pink-soft);
+        }
+
+        body[data-category="Sándwiches"] .product {
+            --item-primary: #27ae60;
+            --item-bg: #e9f7ef;
+            --item-border: #bad9c7;
+        }
+
+        body[data-category="Caldos"] .product {
+            --item-primary: #e67e22;
+            --item-bg: #fef5e7;
+            --item-border: #f5d5a9;
+        }
+
+        body[data-category="Especiales"] .product {
+            --item-primary: #c0392b;
+            --item-bg: #f9ebea;
+            --item-border: #f2d4d1;
+        }
+
+        body[data-category="Bebidas"] .product {
+            --item-primary: #8e44ad;
+            --item-bg: #f4ecf7;
+            --item-border: #d7bde2;
         }
 
         /* Productos */
@@ -259,9 +401,9 @@
             text-align: center;
             gap: 0;
             padding: 0;
-            border: 2px solid var(--card-border);
+            border: 2px solid var(--item-border);
             border-radius: 24px;
-            background: var(--card-bg);
+            background: var(--item-bg);
             box-shadow: 0 6px 18px var(--shadow-color);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             height: 100%;
@@ -273,7 +415,7 @@
 
         .product:hover {
             transform: translateY(-8px);
-            border-color: var(--accent-color);
+            border-color: var(--item-primary);
             box-shadow: 0 14px 30px var(--shadow-color);
         }
 
@@ -291,7 +433,7 @@
             font-size: clamp(20px, 2.5vh, 24px);
             font-weight: 700;
             letter-spacing: 0.2px;
-            color: var(--text-color);
+            color: #1a1a1a;
             line-height: 1.3;
             padding: 0 16px;
             margin-bottom: 12px;
@@ -302,16 +444,16 @@
         }
 
         .product:hover .product-name {
-            color: var(--accent-color);
+            color: var(--item-primary);
         }
 
         .price {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 0.5px;
             color: #ffffff;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff3d8d 100%);
-            padding: 6px 22px;
+            background: var(--item-primary);
+            padding: 7px 24px;
             border-radius: 24px;
             white-space: nowrap;
             flex-shrink: 0;
@@ -319,7 +461,38 @@
             box-shadow: 0 4px 14px var(--shadow-color);
             margin-bottom: 20px;
             margin-top: auto;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+        }
+
+        /* Colores individuales para los botones de categorías (Tabs) cuando están activos */
+        .tab-btn[data-cat="todos"].active {
+            background: var(--brand-pink);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="sandwiches"].active {
+            background: #27ae60;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="caldos"].active {
+            background: #e67e22;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="especiales"].active {
+            background: #c0392b;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="bebidas"].active {
+            background: #8e44ad;
+            color: #fff;
+            border-color: transparent;
         }
 
         /* Botón Flotante WhatsApp */
@@ -386,6 +559,89 @@
             font-size: 14px;
             color: var(--subtitle-color);
         }
+
+        .info-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .info-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 420px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px 30px;
+            min-width: 280px;
+            max-width: 420px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 18px var(--shadow-color);
+            transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+        }
+
+        .info-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .info-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--title-color);
+            margin-bottom: 10px;
+            transition: color 0.4s;
+        }
+
+        .info-text {
+            font-size: 16px;
+            color: var(--text-color);
+            line-height: 1.7;
+            transition: color 0.4s;
+        }
+
+        .info-text strong {
+            color: var(--accent-color);
+        }
+
+        .info-link {
+            display: inline-block;
+            margin-top: 12px;
+            background: linear-gradient(135deg, var(--accent-color), #ff3d8d);
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s;
+        }
+
+        .info-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .map-embed {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 16px;
+            margin-bottom: 14px;
+        }
     </style>
 </head>
 
@@ -409,15 +665,55 @@
         <div class="title">Desayunos Peruanos</div>
         <div class="subtitle">Sabor casero • Recién servido</div>
 
+        <div><span class="date-badge" id="currentDate"></span></div>
+
         <div class="category-tabs" id="categoryTabs">
-            <button class="tab-btn active" onclick="filterCategory('Todos')">✨ Todos</button>
-            <button class="tab-btn" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
-            <button class="tab-btn" onclick="filterCategory('Caldos')">🍲 Caldos</button>
-            <button class="tab-btn" onclick="filterCategory('Especiales')">🔥 Especiales</button>
-            <button class="tab-btn" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
+            <button class="tab-btn active" data-cat="todos" onclick="filterCategory('Todos')">✨ Todos</button>
+            <button class="tab-btn" data-cat="sandwiches" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
+            <button class="tab-btn" data-cat="caldos" data-active-color="#2ecc71" onclick="filterCategory('Caldos')">🍲
+                Caldos</button>
+            <button class="tab-btn" data-cat="especiales" onclick="filterCategory('Especiales')">🔥 Especiales</button>
+            <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
         </div>
 
         <div id="productList"></div>
+
+        <div class="info-section">
+            <div class="info-column">
+                <div class="info-card">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-title">Horario de Atención</div>
+                    <div class="info-text">
+                        <strong>Lunes a Viernes:</strong> 7:00 - 14:00<br>
+                        <strong>Sábados:</strong> 7:00 - 15:00<br>
+                        <strong>Domingos:</strong> 8:00 - 14:00
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <div class="info-title">Contacto</div>
+                    <div class="info-text">
+                        <strong>Teléfono:</strong> +34 600 000 000<br>
+                        <strong>Para llevar:</strong> ✅ Disponible
+                    </div>
+                </div>
+            </div>
+            <div class="info-column">
+                <div class="info-card" style="flex:1;">
+                    <div class="info-icon">📍</div>
+                    <div class="info-title">¿Dónde Estamos?</div>
+                    <iframe class="map-embed"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.223607478837!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI1JzAwLjQiTiAzwrA0MicxMy42Ilc!5e0!3m2!1ses!2ses!4v1600000000000"
+                        allowfullscreen loading="lazy"></iframe>
+                    <div class="info-text">
+                        Calle de Ejemplo, 123<br>
+                        Madrid, España
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver
+                        en Google Maps</a>
+                </div>
+            </div>
+        </div>
 
         <div class="admin-panel" id="adminPanel">
             <h3>Panel Administrador</h3>
@@ -446,26 +742,28 @@
             { name: "Pollo Broaster", price: 14.00, img: "pollo_broster.PNG", category: "Especiales" },
             { name: "Combinado", price: 5.00, img: "combinado.PNG", category: "Especiales" },
             { name: "Torta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Bebidas" },
-            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Caldos" },
-            { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Caldos" },
-            { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Bebidas" },
-            { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Bebidas" },
-            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Bebidas" }
+            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Caldo de Patasca", price: 12.00, img: "https://images.unsplash.com/photo-1548943487-a2e4b43b5930?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Aguadito", price: 8.00, img: "https://images.unsplash.com/photo-1625938144755-652e08e359b7?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop", category: "Bebidas" }
         ];
 
         let currentCategory = 'Todos';
 
-        if (!localStorage.getItem("menu_version_15")) {
+        if (!localStorage.getItem("menu_version_17")) {
             localStorage.removeItem("products");
-            localStorage.setItem("menu_version_15", "true");
+            localStorage.setItem("menu_version_17", "true");
         }
 
         const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -529,6 +827,9 @@
         function filterCategory(category) {
             currentCategory = category;
 
+            // Actualizar atributo en el body para CSS dinámico
+            document.body.setAttribute('data-category', category === 'Bebidas & Postres' ? 'Bebidas' : category);
+
             // Actualizar clases de botones
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => {
@@ -552,7 +853,7 @@
                 const imgUrl = p.img ? p.img : `https://picsum.photos/seed/${encodeURIComponent(p.name)}/100/100`;
                 const delay = (index * 0.04).toFixed(2);
                 list.innerHTML += `
-            <div class="product" style="animation-delay: ${delay}s">
+            <div class="product" data-cat="${p.category || ''}" style="animation-delay: ${delay}s">
                 <img src="${imgUrl}" alt="${p.name}" class="product-img" onerror="this.src='https://picsum.photos/seed/food/100/100'">
                 <span class="product-name">${p.name}</span>
                 <span class="price">${p.price.toFixed(2)} €</span>
@@ -640,7 +941,17 @@
 
         window.addEventListener("resize", renderRandomBackground);
 
+        function updateDate() {
+            const date = new Date();
+            const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            document.getElementById("currentDate").textContent =
+                `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} del ${date.getFullYear()}`;
+        }
+
+        updateDate();
         renderRandomBackground();
+        filterCategory('Todos');
         render();
     </script>
 
