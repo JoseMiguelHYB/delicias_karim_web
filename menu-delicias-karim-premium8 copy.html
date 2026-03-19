@@ -940,25 +940,72 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 240px;
+            max-height: 260px;
             overflow-y: auto;
             padding-right: 6px;
         }
 
+        .cart-header {
+            display: grid;
+            grid-template-columns: 1fr 90px 90px;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.65);
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
         .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: 1fr 90px 90px;
+            gap: 10px;
             padding: 10px 12px;
             border: 1px solid rgba(0, 0, 0, 0.12);
             border-radius: 16px;
             background: rgba(0, 0, 0, 0.03);
+            align-items: center;
         }
 
-        .cart-item span {
-            font-size: 14px;
+        .cart-item-name {
             font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .cart-item-qty {
+            min-width: 26px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .cart-item-price {
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .cart-item-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: background 0.15s, transform 0.15s;
+        }
+
+        .cart-item-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
         }
 
         .cart-total {
@@ -966,7 +1013,7 @@
             font-weight: 700;
             font-size: 16px;
             text-align: right;
-            margin-top: 14px;
+            margin-top: 12px;
         }
 
         .info-icon {
@@ -1065,7 +1112,7 @@
                     <div class="info-title">Mi Pedido</div>
                     <div class="cart-items" id="cartItems"></div>
                     <div class="cart-total" id="cartTotal"></div>
-                    <button class="info-link" id="checkoutBtn">Enviar pedido</button>
+                    <button class="info-link" id="checkoutBtn">Generar factura</button>
                 </div>
             </div>
             <div class="info-column">
@@ -1146,7 +1193,7 @@
         </div>
     </div>
 
-    <a href="https://wa.me/34624245129?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
+    <a href="https://wa.me/34679574301?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
         class="fab-whatsapp" target="_blank" rel="noopener noreferrer">
         <img src="whatsapp.png" alt="WhatsApp Icon" class="fab-icon"> WhatsApp
     </a>
@@ -1215,6 +1262,16 @@
                 return;
             }
 
+            // Encabezados de tabla pequeña
+            const header = document.createElement('div');
+            header.className = 'cart-header';
+            header.innerHTML = `
+                <span>Plato</span>
+                <span>Cant.</span>
+                <span class="cart-header-price">Subtotal</span>
+            `;
+            cartItems.appendChild(header);
+
             let total = 0;
             cart.forEach((item) => {
                 const lineTotal = item.price * item.qty;
@@ -1224,13 +1281,11 @@
                 row.className = 'cart-item';
 
                 const info = document.createElement('div');
-                info.style.flex = '1';
+                info.className = 'cart-item-name';
                 info.innerHTML = `<strong>${item.name}</strong>`;
 
-                const controls = document.createElement('div');
-                controls.style.display = 'flex';
-                controls.style.alignItems = 'center';
-                controls.style.gap = '6px';
+                const qtyControls = document.createElement('div');
+                qtyControls.className = 'cart-item-controls';
 
                 const minus = document.createElement('button');
                 minus.className = 'cart-item-btn';
@@ -1238,27 +1293,25 @@
                 minus.onclick = () => changeCartQuantity(item.name, -1);
 
                 const qty = document.createElement('span');
+                qty.className = 'cart-item-qty';
                 qty.textContent = item.qty;
-                qty.style.minWidth = '20px';
-                qty.style.textAlign = 'center';
 
                 const plus = document.createElement('button');
                 plus.className = 'cart-item-btn';
                 plus.textContent = '+';
                 plus.onclick = () => changeCartQuantity(item.name, 1);
 
-                const price = document.createElement('span');
-                price.textContent = `${lineTotal.toFixed(2)} €`;
-                price.style.minWidth = '80px';
-                price.style.textAlign = 'right';
+                qtyControls.appendChild(minus);
+                qtyControls.appendChild(qty);
+                qtyControls.appendChild(plus);
 
-                controls.appendChild(minus);
-                controls.appendChild(qty);
-                controls.appendChild(plus);
-                controls.appendChild(price);
+                const price = document.createElement('span');
+                price.className = 'cart-item-price';
+                price.textContent = `${lineTotal.toFixed(2)} €`;
 
                 row.appendChild(info);
-                row.appendChild(controls);
+                row.appendChild(qtyControls);
+                row.appendChild(price);
                 cartItems.appendChild(row);
             });
 
@@ -1300,11 +1353,31 @@
         }
 
         function checkoutCart() {
-            if (!cart.length) return;
-            const lines = cart.map((item) => `${item.qty}x ${item.name} (${item.price.toFixed(2)} €)`);
+            if (!cart.length) {
+                alert('Tu carrito está vacío. Añade al menos un producto antes de generar la factura.');
+                return;
+            }
+
+            const whatsappNumber = '679574301'; // Número destino (sin prefijo +34)
+            const lines = cart.map((item) => {
+                const lineTotal = item.price * item.qty;
+                return `${item.qty} x ${item.name} @ ${item.price.toFixed(2)} € = ${lineTotal.toFixed(2)} €`;
+            });
+
             const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-            const msg = encodeURIComponent(`Hola, quiero pedir:\n${lines.join('\n')}\n\nTotal: ${total.toFixed(2)} €`);
-            window.open(`https://wa.me/34624245129?text=${msg}`, '_blank');
+
+            const msg = encodeURIComponent([
+                '📄 *Factura de tu pedido*',
+                '',
+                '*Artículos:*',
+                ...lines.map((l) => `- ${l}`),
+                '',
+                `*Total:* ${total.toFixed(2)} €`,
+                '',
+                'Gracias por tu pedido 😊'
+            ].join('\n'));
+
+            window.open(`https://wa.me/34${whatsappNumber}?text=${msg}`, '_blank');
         }
 
         if (!localStorage.getItem("menu_version_17")) {
