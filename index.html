@@ -294,18 +294,60 @@
         }
 
         /* Colores específicos para cada botón (Inactivos) */
-        .tab-btn[data-cat="todos"] { color: var(--brand-pink); border-color: var(--brand-pink); }
-        .tab-btn[data-cat="sandwiches"] { color: #27ae60; border-color: #27ae60; }
-        .tab-btn[data-cat="caldos"] { color: #e67e22; border-color: #e67e22; }
-        .tab-btn[data-cat="especiales"] { color: #c0392b; border-color: #c0392b; }
-        .tab-btn[data-cat="bebidas"] { color: #8e44ad; border-color: #8e44ad; }
+        .tab-btn[data-cat="todos"] {
+            color: var(--brand-pink);
+            border-color: var(--brand-pink);
+        }
+
+        .tab-btn[data-cat="panes"] {
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .tab-btn[data-cat="caldos"] {
+            color: #e67e22;
+            border-color: #e67e22;
+        }
+
+        .tab-btn[data-cat="especiales"] {
+            color: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .tab-btn[data-cat="bebidas"] {
+            color: #8e44ad;
+            border-color: #8e44ad;
+        }
+
+        .tab-btn[data-cat="tartas"] {
+            color: #a0522d;
+            border-color: #a0522d;
+        }
 
         /* Colores específicos para cada botón (Activos) */
-        .tab-btn[data-cat="todos"].active { background: var(--brand-pink); }
-        .tab-btn[data-cat="sandwiches"].active { background: #27ae60; }
-        .tab-btn[data-cat="caldos"].active { background: #e67e22; }
-        .tab-btn[data-cat="especiales"].active { background: #c0392b; }
-        .tab-btn[data-cat="bebidas"].active { background: #8e44ad; }
+        .tab-btn[data-cat="todos"].active {
+            background: var(--brand-pink);
+        }
+
+        .tab-btn[data-cat="panes"].active {
+            background: #27ae60;
+        }
+
+        .tab-btn[data-cat="caldos"].active {
+            background: #e67e22;
+        }
+
+        .tab-btn[data-cat="especiales"].active {
+            background: #c0392b;
+        }
+
+        .tab-btn[data-cat="bebidas"].active {
+            background: #8e44ad;
+        }
+
+        .tab-btn[data-cat="tartas"].active {
+            background: #a0522d;
+        }
 
         /* Definición de colores por Categoría (Se aplican al seleccionar una) */
         .product {
@@ -314,10 +356,35 @@
             --item-border: var(--brand-pink-soft);
         }
 
-        body[data-category="Sándwiches"] .product { --item-primary: #27ae60; --item-bg: #e9f7ef; --item-border: #bad9c7; }
-        body[data-category="Caldos"] .product { --item-primary: #e67e22; --item-bg: #fef5e7; --item-border: #f5d5a9; }
-        body[data-category="Especiales"] .product { --item-primary: #c0392b; --item-bg: #f9ebea; --item-border: #f2d4d1; }
-        body[data-category="Bebidas"] .product { --item-primary: #8e44ad; --item-bg: #f4ecf7; --item-border: #d7bde2; }
+        body[data-category="Panes"] .product {
+            --item-primary: #27ae60;
+            --item-bg: #e9f7ef;
+            --item-border: #bad9c7;
+        }
+
+        body[data-category="Caldos"] .product {
+            --item-primary: #e67e22;
+            --item-bg: #fef5e7;
+            --item-border: #f5d5a9;
+        }
+
+        body[data-category="Especiales"] .product {
+            --item-primary: #c0392b;
+            --item-bg: #f9ebea;
+            --item-border: #f2d4d1;
+        }
+
+        body[data-category="Bebidas"] .product {
+            --item-primary: #8e44ad;
+            --item-bg: #f4ecf7;
+            --item-border: #d7bde2;
+        }
+
+        body[data-category="Tartas"] .product {
+            --item-primary: #a0522d;
+            --item-bg: #fff8dc;
+            --item-border: #deb887;
+        }
 
         /* Productos */
         #productList {
@@ -410,7 +477,15 @@
             animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
 
         .modal-content {
             background: #fff;
@@ -424,7 +499,17 @@
             animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes slideIn { from { transform: translateY(50px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
 
         .modal-close {
             position: absolute;
@@ -440,7 +525,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             z-index: 10000;
         }
 
@@ -451,11 +536,11 @@
             border-bottom: 2px solid #f0f0f0;
         }
 
-        .modal-body { 
+        .modal-body {
             padding: 30px;
             text-align: left;
         }
-        
+
         .modal-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(28px, 4vh, 36px);
@@ -487,19 +572,29 @@
         }
 
         .modal-order-btn {
-            background: var(--item-primary);
-            color: white;
-            padding: 14px 30px;
-            border-radius: 30px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #ffffff;
+            padding: 16px 36px;
+            border-radius: 40px;
             text-decoration: none;
             font-weight: 700;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
         }
 
         .modal-order-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 28px rgba(0,0,0,0.2);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .modal-order-btn:active {
+            transform: scale(0.98);
         }
 
         .price {
@@ -578,8 +673,10 @@
         }
 
         .fab-icon {
-            font-size: 28px;
-            line-height: 1;
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         /* Panel admin */
@@ -724,11 +821,12 @@
 
         <div class="category-tabs" id="categoryTabs">
             <button class="tab-btn active" data-cat="todos" onclick="filterCategory('Todos')">✨ Todos</button>
-            <button class="tab-btn" data-cat="sandwiches" onclick="filterCategory('Sándwiches')">🥪 Sándwiches</button>
+            <button class="tab-btn" data-cat="panes" onclick="filterCategory('Panes')">🥪 Panes</button>
             <button class="tab-btn" data-cat="caldos" data-active-color="#2ecc71" onclick="filterCategory('Caldos')">🍲
                 Caldos</button>
             <button class="tab-btn" data-cat="especiales" onclick="filterCategory('Especiales')">🔥 Especiales</button>
-            <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">☕ Bebidas & Postres</button>
+            <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">🥤 Bebidas</button>
+            <button class="tab-btn" data-cat="tartas" onclick="filterCategory('Tartas')">🍰 Tartas</button>
         </div>
 
         <div id="productList"></div>
@@ -739,16 +837,17 @@
                     <div class="info-icon">🕐</div>
                     <div class="info-title">Horario de Atención</div>
                     <div class="info-text">
-                        <strong>Lunes a Viernes:</strong> 7:00 - 14:00<br>
-                        <strong>Sábados:</strong> 7:00 - 15:00<br>
-                        <strong>Domingos:</strong> 8:00 - 14:00
+                        <strong>Lunes y Domingo:</strong> Cerrado<br>
+                        <strong>Martes:</strong> 9:00 - 15:00 / 17:00 - 20:00<br>
+                        <strong>Miércoles y Sábado:</strong> 9:00 - 15:00<br>
+                        <strong>Jueves y Viernes:</strong> 9:00 - 15:00 / 17:00 - 20:30
                     </div>
                 </div>
                 <div class="info-card">
                     <div class="info-icon">📞</div>
                     <div class="info-title">Contacto</div>
                     <div class="info-text">
-                        <strong>Teléfono:</strong> +34 600 000 000<br>
+                        <strong>Teléfono:</strong> +34 624 24 51 29<br>
                         <strong>Para llevar:</strong> ✅ Disponible
                     </div>
                 </div>
@@ -758,14 +857,14 @@
                     <div class="info-icon">📍</div>
                     <div class="info-title">¿Dónde Estamos?</div>
                     <iframe class="map-embed"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.223607478837!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI1JzAwLjQiTiAzwrA0MicxMy42Ilc!5e0!3m2!1ses!2ses!4v1600000000000"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.0435171735167!2d-3.666986!3d40.395701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4225d30b62e4f7%3A0xc49d017688c2278!2sC.%20de%20Mart%C3%ADnez%20de%20la%20Riva%2C%204%2C%20Puente%20de%20Vallecas%2C%2028053%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000"
                         allowfullscreen loading="lazy"></iframe>
                     <div class="info-text">
-                        Calle de Ejemplo, 123<br>
-                        Madrid, España
+                        C. de Martínez de la Riva, 4<br>
+                        28053 Madrid (Planta G - Mercadona)
                     </div>
-                    <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver
-                        en Google Maps</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Delicias+Karim+Martinez+de+la+Riva+4+Madrid"
+                        target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver en Google Maps</a>
                 </div>
             </div>
         </div>
@@ -793,41 +892,45 @@
                 <h2 class="modal-title" id="modalTitle">Nombre del Producto</h2>
                 <div class="modal-data">
                     <span class="modal-price-tag" id="modalPrice">0.00 €</span>
-                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">💬 Pedir Ahora</a>
+                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">¡Lo quiero! 💬</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="https://wa.me/34600000000?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
+    <a href="https://wa.me/34624245129?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
         class="fab-whatsapp" target="_blank" rel="noopener noreferrer">
-        <span class="fab-icon">💬</span> Hacer Pedido
+        <img src="whatsapp.png" alt="WhatsApp Icon" class="fab-icon"> WhatsApp
     </a>
 
     <script>
         const defaultProducts = [
-            { name: "Pan con Chicharrón", price: 8.00, img: "pan_chicharron.PNG", category: "Sándwiches" },
-            { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG", category: "Sándwiches" },
-            { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG", category: "Sándwiches" },
+            { name: "Pan con Chicharrón", price: 8.00, img: "pan_chicharron.PNG", category: "Panes" },
+            { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG", category: "Panes" },
+            { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG", category: "Panes" },
             { name: "Pollo Broaster", price: 14.00, img: "pollo_broster.PNG", category: "Especiales" },
             { name: "Combinado", price: 5.00, img: "combinado.PNG", category: "Especiales" },
-            { name: "Torta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Bebidas" },
-            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop", category: "Sándwiches" },
-            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Tarta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Tartas" },
+            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop", category: "Panes" },
+            { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop", category: "Especiales" },
             { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Caldo de Patasca", price: 12.00, img: "https://images.unsplash.com/photo-1548943487-a2e4b43b5930?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Aguadito", price: 8.00, img: "https://images.unsplash.com/photo-1625938144755-652e08e359b7?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop", category: "Sándwiches" },
+            { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?w=400&h=300&fit=crop", category: "Bebidas" },
             { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop", category: "Bebidas" },
-            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop", category: "Bebidas" }
+            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Tarta de Chocolate", price: 4.50, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop", category: "Tartas" },
+            { name: "Keke de Vainilla", price: 3.50, img: "https://images.unsplash.com/photo-1518047601542-79f18c655718?w=400&h=300&fit=crop", category: "Tartas" },
+            { name: "Tres Leches", price: 4.50, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop", category: "Tartas" },
+            { name: "Pie de Limón", price: 4.00, img: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=400&h=300&fit=crop", category: "Tartas" }
         ];
 
         let currentCategory = 'Todos';
@@ -951,10 +1054,10 @@
             modalTitle.innerText = product.name;
             modalPrice.innerText = `${product.price.toFixed(2)} €`;
             modalCategory.innerText = product.category;
-            
+
             // Link de WhatsApp personalizado
             const msg = encodeURIComponent(`¡Hola! Me gustaría pedir un "${product.name}" del Menú Digital.`);
-            modalOrderBtn.href = `https://wa.me/34600000000?text=${msg}`;
+            modalOrderBtn.href = `https://wa.me/34624245129?text=${msg}`;
 
             // Aplicar colores de categoría al modal
             modalContainer.setAttribute('data-cat', product.category);
