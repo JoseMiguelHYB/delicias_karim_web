@@ -704,17 +704,18 @@
         .modal-qty {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             margin-left: auto;
         }
 
         .modal-qty-btn {
-            width: 40px;
-            height: 40px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
             border: 1px solid rgba(0, 0, 0, 0.18);
             background: rgba(255, 255, 255, 0.9);
-            font-size: 22px;
+            font-size: 28px;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -728,12 +729,12 @@
         }
 
         .modal-qty span {
-            min-width: 34px;
+            min-width: 44px;
             text-align: center;
             font-weight: 900;
-            font-size: 20px;
+            font-size: 30px;
             color: var(--brand-pink);
-            padding: 0 6px;
+            padding: 0 8px;
             background: transparent;
         }
 
@@ -897,8 +898,9 @@
 
         .info-section {
             display: flex;
+            flex-wrap: wrap;
             justify-content: flex-start;
-            gap: 20px;
+            gap: 12px;
             margin-top: 30px;
             margin-bottom: 10px;
         }
@@ -906,9 +908,9 @@
         .info-column {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 10px;
             flex: 1;
-            min-width: 280px;
+            min-width: 260px;
             max-width: 420px;
         }
 
@@ -916,9 +918,9 @@
             background: var(--card-bg);
             border: 2px solid var(--card-border);
             border-radius: 24px;
-            padding: 24px 30px;
-            min-width: 280px;
-            max-width: 420px;
+            padding: 16px 20px;
+            min-width: 0;
+            max-width: 100%;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -929,10 +931,61 @@
         }
 
         .cart-card {
-            min-width: 320px;
-            max-width: 420px;
-            padding: 24px 26px;
-            gap: 12px;
+            min-width: 0;
+            max-width: 100%;
+            padding: 18px 16px;
+            gap: 10px;
+        }
+
+        @media (max-width: 680px) {
+            .info-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .info-column {
+                min-width: 0;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .info-card {
+                border-radius: 18px;
+                padding: 12px 14px;
+            }
+
+            .cart-card {
+                padding: 14px 12px;
+                gap: 8px;
+            }
+
+            .cart-items {
+                max-height: 180px;
+            }
+
+            .info-icon {
+                font-size: 22px;
+                margin-bottom: 4px;
+            }
+
+            .info-title {
+                font-size: 15px;
+                margin-bottom: 4px;
+            }
+
+            .info-text {
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
+            .map-embed {
+                height: 150px;
+            }
+
+            .info-link {
+                font-size: 13px;
+                padding: 7px 18px;
+            }
         }
 
         .cart-items {
@@ -1017,23 +1070,23 @@
         }
 
         .info-icon {
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 32px;
+            margin-bottom: 6px;
         }
 
         .info-title {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             transition: color 0.4s;
         }
 
         .info-text {
-            font-size: 16px;
+            font-size: 13px;
             color: var(--text-color);
-            line-height: 1.7;
+            line-height: 1.5;
             transition: color 0.4s;
         }
 
@@ -1064,6 +1117,89 @@
             border: none;
             border-radius: 16px;
             margin-bottom: 14px;
+        }
+
+        /* Modal para nombre del cliente antes de generar factura */
+        .invoice-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 12000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .invoice-modal-card {
+            width: min(460px, 92vw);
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            text-align: left;
+        }
+
+        .invoice-modal-title {
+            margin: 0 0 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--title-color);
+        }
+
+        .invoice-modal-text {
+            margin: 0 0 14px;
+            font-size: 15px;
+            line-height: 1.45;
+            color: var(--text-color);
+        }
+
+        .invoice-modal-input {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 2px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .invoice-modal-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(233, 78, 119, 0.14);
+        }
+
+        .invoice-modal-actions {
+            margin-top: 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .invoice-modal-btn {
+            border: none;
+            border-radius: 14px;
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .invoice-modal-btn.secondary {
+            background: rgba(0, 0, 0, 0.08);
+            color: var(--text-color);
+        }
+
+        .invoice-modal-btn.primary {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #ffffff;
         }
     </style>
 </head>
@@ -1189,6 +1325,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="invoice-modal" id="invoiceModal" onclick="if(event.target === this) closeInvoiceModal()">
+        <div class="invoice-modal-card">
+            <h3 class="invoice-modal-title">Generar Factura</h3>
+            <p class="invoice-modal-text">Escribe el nombre para identificar la factura (por ejemplo: Miguel).</p>
+            <input type="text" id="customerNameInput" class="invoice-modal-input" placeholder="Nombre del cliente" maxlength="60">
+            <div class="invoice-modal-actions">
+                <button type="button" class="invoice-modal-btn secondary" id="invoiceCancelBtn">Cancelar</button>
+                <button type="button" class="invoice-modal-btn primary" id="invoiceConfirmBtn">Generar</button>
             </div>
         </div>
     </div>
@@ -1358,6 +1506,11 @@
                 return;
             }
 
+            const nameInput = document.getElementById('customerNameInput');
+            const customerName = String(nameInput ? nameInput.value : '')
+                .replace(/\s+/g, ' ')
+                .trim();
+
             const whatsappNumber = '679574301'; // Número destino (sin prefijo +34)
             const lines = cart.map((item) => {
                 const lineTotal = item.price * item.qty;
@@ -1365,19 +1518,50 @@
             });
 
             const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+            const orderTime = new Date().toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
 
             const msg = encodeURIComponent([
                 '📄 *Factura de tu pedido*',
+                '',
+                `*Cliente:* ${customerName || 'Sin nombre'}`,
+                `*Hora del pedido:* ${orderTime}`,
                 '',
                 '*Artículos:*',
                 ...lines.map((l) => `- ${l}`),
                 '',
                 `*Total:* ${total.toFixed(2)} €`,
                 '',
-                'Gracias por tu pedido 😊'
+                'Pedido registrado ✅'
             ].join('\n'));
 
             window.open(`https://wa.me/34${whatsappNumber}?text=${msg}`, '_blank');
+            localStorage.setItem('customer_name', customerName);
+            closeInvoiceModal();
+        }
+
+        function openInvoiceModal() {
+            const modal = document.getElementById('invoiceModal');
+            const nameInput = document.getElementById('customerNameInput');
+            const previousName = localStorage.getItem('customer_name') || '';
+            if (nameInput) {
+                nameInput.value = previousName;
+            }
+            modal.style.display = 'flex';
+            if (nameInput) {
+                setTimeout(() => {
+                    nameInput.focus();
+                    nameInput.select();
+                }, 0);
+            }
+        }
+
+        function closeInvoiceModal() {
+            const modal = document.getElementById('invoiceModal');
+            modal.style.display = 'none';
         }
 
         if (!localStorage.getItem("menu_version_17")) {
@@ -1655,8 +1839,14 @@
             updateModalQty();
         });
 
-        document.getElementById('checkoutBtn').addEventListener('click', () => {
-            checkoutCart();
+        document.getElementById('checkoutBtn').addEventListener('click', openInvoiceModal);
+        document.getElementById('invoiceCancelBtn').addEventListener('click', closeInvoiceModal);
+        document.getElementById('invoiceConfirmBtn').addEventListener('click', checkoutCart);
+        document.getElementById('customerNameInput').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkoutCart();
+            }
         });
 
         updateDate();
