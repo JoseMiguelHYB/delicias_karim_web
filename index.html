@@ -517,6 +517,46 @@
             }
         }
 
+        #modalContainer {
+            --modal-accent: var(--brand-pink);
+            --modal-border: var(--brand-pink-soft);
+        }
+
+        #modalContainer[data-cat="Panes"] {
+            --modal-accent: #27ae60;
+            --modal-border: #bad9c7;
+        }
+
+        #modalContainer[data-cat="Caldos"] {
+            --modal-accent: #e67e22;
+            --modal-border: #f5d5a9;
+        }
+
+        #modalContainer[data-cat="Especiales"] {
+            --modal-accent: #c0392b;
+            --modal-border: #f2d4d1;
+        }
+
+        #modalContainer[data-cat="Bebidas"] {
+            --modal-accent: #8e44ad;
+            --modal-border: #d7bde2;
+        }
+
+        #modalContainer[data-cat="Tartas"] {
+            --modal-accent: #a0522d;
+            --modal-border: #deb887;
+        }
+
+        #modalContainer[data-cat="Segundos Criollos"] {
+            --modal-accent: #d35400;
+            --modal-border: #edbb99;
+        }
+
+        #modalContainer[data-cat="Dulces Peruanos"] {
+            --modal-accent: #00a8b5;
+            --modal-border: #b2ebf2;
+        }
+
         .modal-content {
             background: #fff;
             max-width: 90vw;
@@ -528,7 +568,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 42px 120px rgba(0, 0, 0, 0.55);
-            border: 8px solid var(--item-border);
+            border: none;
             animation: slideIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -564,15 +604,50 @@
 
         .modal-img {
             width: 100%;
-            max-height: calc(100vh - 220px);
-            object-fit: contain;
+            height: 60vh;
+            max-height: 65vh;
+            object-fit: cover;
             border-bottom: 2px solid #f0f0f0;
             cursor: zoom-in;
         }
 
+        .modal-nav {
+            position: absolute;
+            top: 42%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            padding: 0 12px;
+        }
+
+        .modal-nav-btn {
+            pointer-events: auto;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--brand-pink);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .modal-nav-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
+        }
+
         .modal-body {
-            padding: 30px;
+            padding: 28px 28px 30px;
             text-align: left;
+            overflow-y: auto;
+            max-height: calc(92vh - 60vh - 90px);
         }
 
         .modal-title {
@@ -584,12 +659,16 @@
 
         .modal-category-text {
             display: inline-block;
-            color: var(--item-primary);
+            color: var(--modal-accent);
             font-weight: 700;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 12px;
+        }
+
+        .modal-order-btn {
+            background: linear-gradient(135deg, var(--modal-accent), rgba(0,0,0,0.15));
         }
 
         .modal-data {
@@ -951,6 +1030,10 @@
     <div class="product-modal" id="productModal" onclick="if(event.target === this) closeProductModal()">
         <div class="modal-content" id="modalContainer">
             <button class="modal-close" onclick="closeProductModal()">×</button>
+            <div class="modal-nav">
+                <button class="modal-nav-btn modal-nav-prev" onclick="navigateModal(-1)" aria-label="Anterior">‹</button>
+                <button class="modal-nav-btn modal-nav-next" onclick="navigateModal(1)" aria-label="Siguiente">›</button>
+            </div>
             <img src="" alt="" class="modal-img" id="modalImg">
             <div class="modal-body">
                 <span class="modal-category-text" id="modalCategory">Sándwiches</span>
@@ -1008,6 +1091,8 @@
         ];
 
         let currentCategory = 'Todos';
+        let modalProducts = [];
+        let modalIndex = 0;
 
         if (!localStorage.getItem("menu_version_17")) {
             localStorage.removeItem("products");
@@ -1113,10 +1198,13 @@
         }
 
         // Funciones del Modal
-        function openProductModal(productName) {
-            const product = products.find(p => p.name === productName);
-            if (!product) return;
+        function getFilteredProducts() {
+            return currentCategory === 'Todos'
+                ? products
+                : products.filter(p => p.category === currentCategory || (!p.category && currentCategory === 'Especiales'));
+        }
 
+        function showProductInModal(product) {
             const modal = document.getElementById('productModal');
             const modalImg = document.getElementById('modalImg');
             const modalTitle = document.getElementById('modalTitle');
@@ -1139,6 +1227,24 @@
 
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden'; // Evitar scroll al ver modal
+        }
+
+        function openProductModal(productName) {
+            modalProducts = getFilteredProducts();
+            modalIndex = modalProducts.findIndex((p) => p.name === productName);
+            if (modalIndex < 0) modalIndex = 0;
+
+            const product = modalProducts[modalIndex];
+            if (!product) return;
+
+            showProductInModal(product);
+        }
+
+        function navigateModal(direction) {
+            if (!modalProducts.length) return;
+
+            modalIndex = (modalIndex + direction + modalProducts.length) % modalProducts.length;
+            showProductInModal(modalProducts[modalIndex]);
         }
 
         function closeProductModal() {
