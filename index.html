@@ -701,6 +701,42 @@
             cursor: pointer;
         }
 
+        .modal-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .modal-qty-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .modal-qty-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .modal-qty span {
+            min-width: 34px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--brand-pink);
+            padding: 0 6px;
+            background: transparent;
+        }
+
         .modal-order-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
@@ -708,6 +744,14 @@
 
         .modal-order-btn:active {
             transform: scale(0.98);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
         }
 
         .price {
@@ -853,7 +897,7 @@
 
         .info-section {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 20px;
             margin-top: 30px;
             margin-bottom: 10px;
@@ -884,6 +928,94 @@
             transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
         }
 
+        .cart-card {
+            min-width: 320px;
+            max-width: 420px;
+            padding: 24px 26px;
+            gap: 12px;
+        }
+
+        .cart-items {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .cart-header {
+            display: grid;
+            grid-template-columns: 1fr 90px 90px;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.65);
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 1fr 90px 90px;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.03);
+            align-items: center;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .cart-item-qty {
+            min-width: 26px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .cart-item-price {
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .cart-item-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: background 0.15s, transform 0.15s;
+        }
+
+        .cart-item-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
+        }
+
+        .cart-total {
+            width: 100%;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: right;
+            margin-top: 12px;
+        }
+
         .info-icon {
             font-size: 36px;
             margin-bottom: 10px;
@@ -893,7 +1025,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 22px;
             font-weight: 700;
-            color: var(--title-color);
+            color: #000;
             margin-bottom: 10px;
             transition: color 0.4s;
         }
@@ -975,7 +1107,16 @@
 
         <div class="info-section">
             <div class="info-column">
-                <div class="info-card">
+                <div class="info-card cart-card">
+                    <div class="info-icon">🛒</div>
+                    <div class="info-title">Mi Pedido</div>
+                    <div class="cart-items" id="cartItems"></div>
+                    <div class="cart-total" id="cartTotal"></div>
+                    <button class="info-link" id="checkoutBtn">Generar factura</button>
+                </div>
+            </div>
+            <div class="info-column">
+                <div class="info-card neutral">
                     <div class="info-icon">🕐</div>
                     <div class="info-title">Horario de Atención</div>
                     <div class="info-text">
@@ -985,7 +1126,7 @@
                         <strong>Jueves y Viernes:</strong> 9:00 - 15:00 / 17:00 - 20:30
                     </div>
                 </div>
-                <div class="info-card">
+                <div class="info-card neutral">
                     <div class="info-icon">📞</div>
                     <div class="info-title">Contacto</div>
                     <div class="info-text">
@@ -995,7 +1136,7 @@
                 </div>
             </div>
             <div class="info-column">
-                <div class="info-card" style="flex:1;">
+                <div class="info-card neutral" style="flex:1;">
                     <div class="info-icon">📍</div>
                     <div class="info-title">¿Dónde Estamos?</div>
                     <iframe class="map-embed"
@@ -1040,13 +1181,19 @@
                 <h2 class="modal-title" id="modalTitle">Nombre del Producto</h2>
                 <div class="modal-data">
                     <span class="modal-price-tag" id="modalPrice">0.00 €</span>
-                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">¡Lo quiero! 💬</a>
+                    <div class="modal-actions">
+                        <div class="modal-qty">
+                            <button class="modal-qty-btn" id="modalQtyMinus" type="button">−</button>
+                            <span id="modalQtyValue">0</span>
+                            <button class="modal-qty-btn" id="modalQtyPlus" type="button">＋</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="https://wa.me/34624245129?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
+    <a href="https://wa.me/34679574301?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
         class="fab-whatsapp" target="_blank" rel="noopener noreferrer">
         <img src="whatsapp.png" alt="WhatsApp Icon" class="fab-icon"> WhatsApp
     </a>
@@ -1093,6 +1240,145 @@
         let currentCategory = 'Todos';
         let modalProducts = [];
         let modalIndex = 0;
+
+        // Carrito de pedido (siempre inicia vacío)
+        localStorage.removeItem('cart');
+        let cart = [];
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            if (!cartItems || !cartTotal) return;
+
+            cartItems.innerHTML = '';
+            if (!cart.length) {
+                cartItems.innerHTML = '<div style="opacity:0.65; padding: 10px 0;">No hay nada en tu pedido todavía</div>';
+                cartTotal.textContent = 'Total: 0.00 €';
+                updateModalQty();
+                return;
+            }
+
+            // Encabezados de tabla pequeña
+            const header = document.createElement('div');
+            header.className = 'cart-header';
+            header.innerHTML = `
+                <span>Plato</span>
+                <span>Cant.</span>
+                <span class="cart-header-price">Subtotal</span>
+            `;
+            cartItems.appendChild(header);
+
+            let total = 0;
+            cart.forEach((item) => {
+                const lineTotal = item.price * item.qty;
+                total += lineTotal;
+
+                const row = document.createElement('div');
+                row.className = 'cart-item';
+
+                const info = document.createElement('div');
+                info.className = 'cart-item-name';
+                info.innerHTML = `<strong>${item.name}</strong>`;
+
+                const qtyControls = document.createElement('div');
+                qtyControls.className = 'cart-item-controls';
+
+                const minus = document.createElement('button');
+                minus.className = 'cart-item-btn';
+                minus.textContent = '−';
+                minus.onclick = () => changeCartQuantity(item.name, -1);
+
+                const qty = document.createElement('span');
+                qty.className = 'cart-item-qty';
+                qty.textContent = item.qty;
+
+                const plus = document.createElement('button');
+                plus.className = 'cart-item-btn';
+                plus.textContent = '+';
+                plus.onclick = () => changeCartQuantity(item.name, 1);
+
+                qtyControls.appendChild(minus);
+                qtyControls.appendChild(qty);
+                qtyControls.appendChild(plus);
+
+                const price = document.createElement('span');
+                price.className = 'cart-item-price';
+                price.textContent = `${lineTotal.toFixed(2)} €`;
+
+                row.appendChild(info);
+                row.appendChild(qtyControls);
+                row.appendChild(price);
+                cartItems.appendChild(row);
+            });
+
+            cartTotal.textContent = `Total: ${total.toFixed(2)} €`;
+            updateModalQty();
+        }
+
+        function addToCart(productName, productPrice) {
+            const existing = cart.find((i) => i.name === productName);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name: productName, price: productPrice, qty: 1 });
+            }
+            saveCart();
+            renderCart();
+        }
+
+        function changeCartQuantity(productName, delta) {
+            const item = cart.find((i) => i.name === productName);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter((i) => i.name !== productName);
+            }
+            saveCart();
+            renderCart();
+        }
+
+        function updateModalQty() {
+            const qtyEl = document.getElementById('modalQtyValue');
+            if (!qtyEl) return;
+            if (!currentModalProduct) {
+                qtyEl.textContent = '0';
+                return;
+            }
+            const item = cart.find((i) => i.name === currentModalProduct.name);
+            qtyEl.textContent = item ? item.qty : '0';
+        }
+
+        function checkoutCart() {
+            if (!cart.length) {
+                alert('Tu carrito está vacío. Añade al menos un producto antes de generar la factura.');
+                return;
+            }
+
+            const whatsappNumber = '679574301'; // Número destino (sin prefijo +34)
+            const lines = cart.map((item) => {
+                const lineTotal = item.price * item.qty;
+                return `${item.qty} x ${item.name} @ ${item.price.toFixed(2)} € = ${lineTotal.toFixed(2)} €`;
+            });
+
+            const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+            const msg = encodeURIComponent([
+                '📄 *Factura de tu pedido*',
+                '',
+                '*Artículos:*',
+                ...lines.map((l) => `- ${l}`),
+                '',
+                `*Total:* ${total.toFixed(2)} €`,
+                '',
+                'Gracias por tu pedido 😊'
+            ].join('\n'));
+
+            window.open(`https://wa.me/34${whatsappNumber}?text=${msg}`, '_blank');
+        }
 
         if (!localStorage.getItem("menu_version_17")) {
             localStorage.removeItem("products");
@@ -1204,13 +1490,15 @@
                 : products.filter(p => p.category === currentCategory || (!p.category && currentCategory === 'Especiales'));
         }
 
+        let currentModalProduct = null;
+
         function showProductInModal(product) {
+            currentModalProduct = product;
             const modal = document.getElementById('productModal');
             const modalImg = document.getElementById('modalImg');
             const modalTitle = document.getElementById('modalTitle');
             const modalPrice = document.getElementById('modalPrice');
             const modalCategory = document.getElementById('modalCategory');
-            const modalOrderBtn = document.getElementById('modalOrderBtn');
             const modalContainer = document.getElementById('modalContainer');
 
             modalImg.src = product.img || `https://picsum.photos/seed/${encodeURIComponent(product.name)}/100/100`;
@@ -1218,15 +1506,12 @@
             modalPrice.innerText = `${product.price.toFixed(2)} €`;
             modalCategory.innerText = product.category;
 
-            // Link de WhatsApp personalizado
-            const msg = encodeURIComponent(`¡Hola! Me gustaría pedir un "${product.name}" del Menú Digital.`);
-            modalOrderBtn.href = `https://wa.me/34624245129?text=${msg}`;
-
             // Aplicar colores de categoría al modal
             modalContainer.setAttribute('data-cat', product.category);
 
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden'; // Evitar scroll al ver modal
+            updateModalQty();
         }
 
         function openProductModal(productName) {
@@ -1353,6 +1638,26 @@
             document.getElementById("currentDate").textContent =
                 `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} del ${date.getFullYear()}`;
         }
+
+        // Inicializar carrito
+        renderCart();
+
+        const modalQtyValue = document.getElementById('modalQtyValue');
+        document.getElementById('modalQtyPlus').addEventListener('click', () => {
+            if (!currentModalProduct) return;
+            addToCart(currentModalProduct.name, currentModalProduct.price);
+            updateModalQty();
+        });
+
+        document.getElementById('modalQtyMinus').addEventListener('click', () => {
+            if (!currentModalProduct) return;
+            changeCartQuantity(currentModalProduct.name, -1);
+            updateModalQty();
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            checkoutCart();
+        });
 
         updateDate();
         renderRandomBackground();

@@ -496,14 +496,14 @@
         .product-modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             z-index: 9999;
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 12px;
             animation: fadeIn 0.3s ease;
         }
 
@@ -517,16 +517,59 @@
             }
         }
 
+        #modalContainer {
+            --modal-accent: var(--brand-pink);
+            --modal-border: var(--brand-pink-soft);
+        }
+
+        #modalContainer[data-cat="Panes"] {
+            --modal-accent: #27ae60;
+            --modal-border: #bad9c7;
+        }
+
+        #modalContainer[data-cat="Caldos"] {
+            --modal-accent: #e67e22;
+            --modal-border: #f5d5a9;
+        }
+
+        #modalContainer[data-cat="Especiales"] {
+            --modal-accent: #c0392b;
+            --modal-border: #f2d4d1;
+        }
+
+        #modalContainer[data-cat="Bebidas"] {
+            --modal-accent: #8e44ad;
+            --modal-border: #d7bde2;
+        }
+
+        #modalContainer[data-cat="Tartas"] {
+            --modal-accent: #a0522d;
+            --modal-border: #deb887;
+        }
+
+        #modalContainer[data-cat="Segundos Criollos"] {
+            --modal-accent: #d35400;
+            --modal-border: #edbb99;
+        }
+
+        #modalContainer[data-cat="Dulces Peruanos"] {
+            --modal-accent: #00a8b5;
+            --modal-border: #b2ebf2;
+        }
+
         .modal-content {
             background: #fff;
-            max-width: 600px;
-            width: 95%;
+            max-width: 90vw;
+            max-height: 92vh;
+            width: min(760px, 90vw);
             border-radius: 40px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-            border: 8px solid var(--item-border);
-            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 42px 120px rgba(0, 0, 0, 0.55);
+            border: none;
+            animation: slideIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes slideIn {
@@ -561,14 +604,50 @@
 
         .modal-img {
             width: 100%;
-            max-height: 450px;
+            height: 60vh;
+            max-height: 65vh;
             object-fit: cover;
             border-bottom: 2px solid #f0f0f0;
+            cursor: zoom-in;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 42%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            padding: 0 12px;
+        }
+
+        .modal-nav-btn {
+            pointer-events: auto;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--brand-pink);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .modal-nav-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
         }
 
         .modal-body {
-            padding: 30px;
+            padding: 28px 28px 30px;
             text-align: left;
+            overflow-y: auto;
+            max-height: calc(92vh - 60vh - 90px);
         }
 
         .modal-title {
@@ -580,12 +659,16 @@
 
         .modal-category-text {
             display: inline-block;
-            color: var(--item-primary);
+            color: var(--modal-accent);
             font-weight: 700;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 12px;
+        }
+
+        .modal-order-btn {
+            background: linear-gradient(135deg, var(--modal-accent), rgba(0,0,0,0.15));
         }
 
         .modal-data {
@@ -618,6 +701,42 @@
             cursor: pointer;
         }
 
+        .modal-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .modal-qty-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .modal-qty-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .modal-qty span {
+            min-width: 34px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--brand-pink);
+            padding: 0 6px;
+            background: transparent;
+        }
+
         .modal-order-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
@@ -625,6 +744,14 @@
 
         .modal-order-btn:active {
             transform: scale(0.98);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
         }
 
         .price {
@@ -770,7 +897,7 @@
 
         .info-section {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 20px;
             margin-top: 30px;
             margin-bottom: 10px;
@@ -801,6 +928,47 @@
             transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
         }
 
+        .cart-card {
+            min-width: 320px;
+            max-width: 420px;
+            padding: 24px 26px;
+            gap: 12px;
+        }
+
+        .cart-items {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 240px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            padding: 10px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .cart-item span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cart-total {
+            width: 100%;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: right;
+            margin-top: 14px;
+        }
+
         .info-icon {
             font-size: 36px;
             margin-bottom: 10px;
@@ -810,7 +978,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 22px;
             font-weight: 700;
-            color: var(--title-color);
+            color: #000;
             margin-bottom: 10px;
             transition: color 0.4s;
         }
@@ -892,7 +1060,16 @@
 
         <div class="info-section">
             <div class="info-column">
-                <div class="info-card">
+                <div class="info-card cart-card">
+                    <div class="info-icon">🛒</div>
+                    <div class="info-title">Mi Pedido</div>
+                    <div class="cart-items" id="cartItems"></div>
+                    <div class="cart-total" id="cartTotal"></div>
+                    <button class="info-link" id="checkoutBtn">Enviar pedido</button>
+                </div>
+            </div>
+            <div class="info-column">
+                <div class="info-card neutral">
                     <div class="info-icon">🕐</div>
                     <div class="info-title">Horario de Atención</div>
                     <div class="info-text">
@@ -902,7 +1079,7 @@
                         <strong>Jueves y Viernes:</strong> 9:00 - 15:00 / 17:00 - 20:30
                     </div>
                 </div>
-                <div class="info-card">
+                <div class="info-card neutral">
                     <div class="info-icon">📞</div>
                     <div class="info-title">Contacto</div>
                     <div class="info-text">
@@ -912,7 +1089,7 @@
                 </div>
             </div>
             <div class="info-column">
-                <div class="info-card" style="flex:1;">
+                <div class="info-card neutral" style="flex:1;">
                     <div class="info-icon">📍</div>
                     <div class="info-title">¿Dónde Estamos?</div>
                     <iframe class="map-embed"
@@ -947,13 +1124,23 @@
     <div class="product-modal" id="productModal" onclick="if(event.target === this) closeProductModal()">
         <div class="modal-content" id="modalContainer">
             <button class="modal-close" onclick="closeProductModal()">×</button>
+            <div class="modal-nav">
+                <button class="modal-nav-btn modal-nav-prev" onclick="navigateModal(-1)" aria-label="Anterior">‹</button>
+                <button class="modal-nav-btn modal-nav-next" onclick="navigateModal(1)" aria-label="Siguiente">›</button>
+            </div>
             <img src="" alt="" class="modal-img" id="modalImg">
             <div class="modal-body">
                 <span class="modal-category-text" id="modalCategory">Sándwiches</span>
                 <h2 class="modal-title" id="modalTitle">Nombre del Producto</h2>
                 <div class="modal-data">
                     <span class="modal-price-tag" id="modalPrice">0.00 €</span>
-                    <a href="#" class="modal-order-btn" id="modalOrderBtn" target="_blank">¡Lo quiero! 💬</a>
+                    <div class="modal-actions">
+                        <div class="modal-qty">
+                            <button class="modal-qty-btn" id="modalQtyMinus" type="button">−</button>
+                            <span id="modalQtyValue">0</span>
+                            <button class="modal-qty-btn" id="modalQtyPlus" type="button">＋</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1004,6 +1191,121 @@
         ];
 
         let currentCategory = 'Todos';
+        let modalProducts = [];
+        let modalIndex = 0;
+
+        // Carrito de pedido (siempre inicia vacío)
+        localStorage.removeItem('cart');
+        let cart = [];
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            if (!cartItems || !cartTotal) return;
+
+            cartItems.innerHTML = '';
+            if (!cart.length) {
+                cartItems.innerHTML = '<div style="opacity:0.65; padding: 10px 0;">No hay nada en tu pedido todavía</div>';
+                cartTotal.textContent = 'Total: 0.00 €';
+                updateModalQty();
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item) => {
+                const lineTotal = item.price * item.qty;
+                total += lineTotal;
+
+                const row = document.createElement('div');
+                row.className = 'cart-item';
+
+                const info = document.createElement('div');
+                info.style.flex = '1';
+                info.innerHTML = `<strong>${item.name}</strong>`;
+
+                const controls = document.createElement('div');
+                controls.style.display = 'flex';
+                controls.style.alignItems = 'center';
+                controls.style.gap = '6px';
+
+                const minus = document.createElement('button');
+                minus.className = 'cart-item-btn';
+                minus.textContent = '−';
+                minus.onclick = () => changeCartQuantity(item.name, -1);
+
+                const qty = document.createElement('span');
+                qty.textContent = item.qty;
+                qty.style.minWidth = '20px';
+                qty.style.textAlign = 'center';
+
+                const plus = document.createElement('button');
+                plus.className = 'cart-item-btn';
+                plus.textContent = '+';
+                plus.onclick = () => changeCartQuantity(item.name, 1);
+
+                const price = document.createElement('span');
+                price.textContent = `${lineTotal.toFixed(2)} €`;
+                price.style.minWidth = '80px';
+                price.style.textAlign = 'right';
+
+                controls.appendChild(minus);
+                controls.appendChild(qty);
+                controls.appendChild(plus);
+                controls.appendChild(price);
+
+                row.appendChild(info);
+                row.appendChild(controls);
+                cartItems.appendChild(row);
+            });
+
+            cartTotal.textContent = `Total: ${total.toFixed(2)} €`;
+            updateModalQty();
+        }
+
+        function addToCart(productName, productPrice) {
+            const existing = cart.find((i) => i.name === productName);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name: productName, price: productPrice, qty: 1 });
+            }
+            saveCart();
+            renderCart();
+        }
+
+        function changeCartQuantity(productName, delta) {
+            const item = cart.find((i) => i.name === productName);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter((i) => i.name !== productName);
+            }
+            saveCart();
+            renderCart();
+        }
+
+        function updateModalQty() {
+            const qtyEl = document.getElementById('modalQtyValue');
+            if (!qtyEl) return;
+            if (!currentModalProduct) {
+                qtyEl.textContent = '0';
+                return;
+            }
+            const item = cart.find((i) => i.name === currentModalProduct.name);
+            qtyEl.textContent = item ? item.qty : '0';
+        }
+
+        function checkoutCart() {
+            if (!cart.length) return;
+            const lines = cart.map((item) => `${item.qty}x ${item.name} (${item.price.toFixed(2)} €)`);
+            const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+            const msg = encodeURIComponent(`Hola, quiero pedir:\n${lines.join('\n')}\n\nTotal: ${total.toFixed(2)} €`);
+            window.open(`https://wa.me/34624245129?text=${msg}`, '_blank');
+        }
 
         if (!localStorage.getItem("menu_version_17")) {
             localStorage.removeItem("products");
@@ -1029,7 +1331,8 @@
             const normalized = normalizeProductName(rawName);
             const aliases = {
                 "combinado especial": "combinado",
-                "pan con jamon del pais": null
+                "pan con jamon del pais": null,
+                "torta helada": "tarta helada"
             };
             if (Object.prototype.hasOwnProperty.call(aliases, normalized) && aliases[normalized] === null) {
                 return "";
@@ -1108,16 +1411,21 @@
         }
 
         // Funciones del Modal
-        function openProductModal(productName) {
-            const product = products.find(p => p.name === productName);
-            if (!product) return;
+        function getFilteredProducts() {
+            return currentCategory === 'Todos'
+                ? products
+                : products.filter(p => p.category === currentCategory || (!p.category && currentCategory === 'Especiales'));
+        }
 
+        let currentModalProduct = null;
+
+        function showProductInModal(product) {
+            currentModalProduct = product;
             const modal = document.getElementById('productModal');
             const modalImg = document.getElementById('modalImg');
             const modalTitle = document.getElementById('modalTitle');
             const modalPrice = document.getElementById('modalPrice');
             const modalCategory = document.getElementById('modalCategory');
-            const modalOrderBtn = document.getElementById('modalOrderBtn');
             const modalContainer = document.getElementById('modalContainer');
 
             modalImg.src = product.img || `https://picsum.photos/seed/${encodeURIComponent(product.name)}/100/100`;
@@ -1125,21 +1433,52 @@
             modalPrice.innerText = `${product.price.toFixed(2)} €`;
             modalCategory.innerText = product.category;
 
-            // Link de WhatsApp personalizado
-            const msg = encodeURIComponent(`¡Hola! Me gustaría pedir un "${product.name}" del Menú Digital.`);
-            modalOrderBtn.href = `https://wa.me/34624245129?text=${msg}`;
-
             // Aplicar colores de categoría al modal
             modalContainer.setAttribute('data-cat', product.category);
 
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden'; // Evitar scroll al ver modal
+            updateModalQty();
+        }
+
+        function openProductModal(productName) {
+            modalProducts = getFilteredProducts();
+            modalIndex = modalProducts.findIndex((p) => p.name === productName);
+            if (modalIndex < 0) modalIndex = 0;
+
+            const product = modalProducts[modalIndex];
+            if (!product) return;
+
+            showProductInModal(product);
+        }
+
+        function navigateModal(direction) {
+            if (!modalProducts.length) return;
+
+            modalIndex = (modalIndex + direction + modalProducts.length) % modalProducts.length;
+            showProductInModal(modalProducts[modalIndex]);
         }
 
         function closeProductModal() {
             document.getElementById('productModal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
+
+        // Permite ver la imagen del producto a tamaño completo al tocarla
+        document.getElementById('modalImg').addEventListener('click', () => {
+            const img = document.getElementById('modalImg');
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+                return;
+            }
+            if (img.requestFullscreen) {
+                img.requestFullscreen().catch(() => {});
+            } else if (img.webkitRequestFullscreen) {
+                img.webkitRequestFullscreen();
+            } else {
+                window.open(img.src, '_blank');
+            }
+        });
 
         function addProduct() {
             const name = document.getElementById("name").value;
@@ -1226,6 +1565,26 @@
             document.getElementById("currentDate").textContent =
                 `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} del ${date.getFullYear()}`;
         }
+
+        // Inicializar carrito
+        renderCart();
+
+        const modalQtyValue = document.getElementById('modalQtyValue');
+        document.getElementById('modalQtyPlus').addEventListener('click', () => {
+            if (!currentModalProduct) return;
+            addToCart(currentModalProduct.name, currentModalProduct.price);
+            updateModalQty();
+        });
+
+        document.getElementById('modalQtyMinus').addEventListener('click', () => {
+            if (!currentModalProduct) return;
+            changeCartQuantity(currentModalProduct.name, -1);
+            updateModalQty();
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            checkoutCart();
+        });
 
         updateDate();
         renderRandomBackground();
