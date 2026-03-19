@@ -71,6 +71,12 @@
             --cat-border: #d7bde2;
         }
 
+        body[data-category="Postres"] {
+            --cat-primary: #ad1457;
+            --cat-bg: #fdeef5;
+            --cat-border: #f4c6da;
+        }
+
         body.dark-mode {
             --bg-color: #160c11;
             --container-bg: rgba(30, 18, 24, 0.9);
@@ -328,6 +334,11 @@
             border-color: #a0522d;
         }
 
+        .tab-btn[data-cat="postres"] {
+            color: #ad1457;
+            border-color: #ad1457;
+        }
+
         .tab-btn[data-cat="segundos"] {
             color: #d35400;
             border-color: #d35400;
@@ -361,6 +372,10 @@
 
         .tab-btn[data-cat="tartas"].active {
             background: #a0522d;
+        }
+
+        .tab-btn[data-cat="postres"].active {
+            background: #ad1457;
         }
 
         .tab-btn[data-cat="segundos"].active {
@@ -400,6 +415,12 @@
             --item-primary: #8e44ad;
             --item-bg: #f4ecf7;
             --item-border: #d7bde2;
+        }
+
+        body[data-category="Postres"] .product {
+            --item-primary: #ad1457;
+            --item-bg: #fdeef5;
+            --item-border: #f4c6da;
         }
 
         body[data-category="Tartas"] .product {
@@ -546,6 +567,11 @@
         #modalContainer[data-cat="Bebidas"] {
             --modal-accent: #8e44ad;
             --modal-border: #d7bde2;
+        }
+
+        #modalContainer[data-cat="Postres"] {
+            --modal-accent: #ad1457;
+            --modal-border: #f4c6da;
         }
 
         #modalContainer[data-cat="Tartas"] {
@@ -816,6 +842,12 @@
 
         .tab-btn[data-cat="tartas"].active {
             background: #a0522d;
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .tab-btn[data-cat="postres"].active {
+            background: #ad1457;
             color: #fff;
             border-color: transparent;
         }
@@ -1237,6 +1269,7 @@
                 Criollos</button>
             <button class="tab-btn" data-cat="especiales" onclick="filterCategory('Especiales')">👑 Especiales</button>
             <button class="tab-btn" data-cat="bebidas" onclick="filterCategory('Bebidas')">🥤 Bebidas</button>
+            <button class="tab-btn" data-cat="postres" onclick="filterCategory('Postres')">🍮 Postres</button>
             <button class="tab-btn" data-cat="tartas" onclick="filterCategory('Tartas')">🍰 Tartas</button>
             <button class="tab-btn" data-cat="dulces" onclick="filterCategory('Dulces Peruanos')">🍭 Dulces
                 Peruanos</button>
@@ -1355,30 +1388,39 @@
             { name: "Pan con Tamal", price: 8.00, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Pan con Pollo", price: 5.00, img: "pan_pollo.PNG", category: "Panes" },
             { name: "Empanada de Pollo", price: 4.00, img: "empanada_pollo.PNG", category: "Panes" },
-            { name: "Pollo Broaster", price: 14.00, img: "pollo_broster.PNG", category: "Especiales" },
+            { name: "Pollo Broaster", price: 12.00, img: "pollo_broster.PNG", category: "Especiales" },
             { name: "Combinado", price: 5.00, img: "combinado.PNG", category: "Segundos Criollos" },
             { name: "Tarta Helada", price: 4.00, img: "tarta_helada.PNG", category: "Tartas" },
-            { name: "Pan con Asado", price: 7.00, img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Pan con Salchicha", price: 6.00, img: "https://images.unsplash.com/photo-1528732821692-e776ff0606af?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Pan con Jamón", price: 5.00, img: "https://images.unsplash.com/photo-1553909489-cd47ce7f0989?w=400&h=300&fit=crop", category: "Panes" },
-            { name: "Sangrecita", price: 4.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop", category: "Segundos Criollos" },
             { name: "Caldo de Gallina", price: 10.00, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop", category: "Caldos" },
-            { name: "Caldo de Mote", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Shambar", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop", category: "Caldos" },
+            { name: "Caldo de Cordero", price: 10.00, img: "https://images.unsplash.com/photo-1548946522-4a313e8972a4?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Caldo de Patasca", price: 12.00, img: "https://images.unsplash.com/photo-1548943487-a2e4b43b5930?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Aguadito", price: 8.00, img: "https://images.unsplash.com/photo-1625938144755-652e08e359b7?w=400&h=300&fit=crop", category: "Caldos" },
             { name: "Lomo al Jugo", price: 6.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Segundos Criollos" },
-            { name: "Pan con Huevo", price: 5.00, img: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&h=300&fit=crop", category: "Panes" },
-            { name: "Tamal Criollo", price: 7.00, img: "https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=400&h=300&fit=crop", category: "Segundos Criollos" },
+            { name: "Cabrito a la Norteña", price: 12.00, img: "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop", category: "Segundos Criollos" },
+            { name: "Arroz con Pollo", price: 10.00, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop", category: "Segundos Criollos" },
+            { name: "Carapulcra con Sopa Seca", price: 11.00, img: "https://images.unsplash.com/photo-1544025162-811c7dfec09f?w=400&h=300&fit=crop", category: "Segundos Criollos" },
             { name: "Pan con Palta", price: 5.00, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop", category: "Panes" },
             { name: "Quinua Caliente", price: 4.00, img: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?w=400&h=300&fit=crop", category: "Bebidas" },
             { name: "Emoliente", price: 2.50, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop", category: "Bebidas" },
-            { name: "Café Pasado", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Café Americano", price: 3.00, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Té con Limón", price: 2.50, img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Gaseosa Coca-Cola", price: 2.50, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Inca Kola", price: 2.50, img: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Jarra de Chicha", price: 8.00, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Chicha Morada", price: 3.50, img: "https://images.unsplash.com/photo-1464306076886-da185f6a9d05?w=400&h=300&fit=crop", category: "Bebidas" },
+            { name: "Gelatina con Flan", price: 4.50, img: "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=400&h=300&fit=crop", category: "Postres" },
+            { name: "Mazamorra Morada", price: 4.00, img: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&h=300&fit=crop", category: "Postres" },
+            { name: "Arroz con Leche", price: 4.00, img: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=400&h=300&fit=crop", category: "Postres" },
+            { name: "Suspiro a la Limeña", price: 4.50, img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop", category: "Postres" },
             { name: "Tarta de Chocolate", price: 4.50, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop", category: "Tartas" },
             { name: "Keke de Vainilla", price: 3.50, img: "https://images.unsplash.com/photo-1518047601542-79f18c655718?w=400&h=300&fit=crop", category: "Tartas" },
             { name: "Tres Leches", price: 4.50, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=300&fit=crop", category: "Tartas" },
             { name: "Pie de Limón", price: 4.00, img: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=400&h=300&fit=crop", category: "Tartas" },
-            { name: "Pachamanca 3 Carnes", price: 12.00, img: "https://images.unsplash.com/photo-1544025162-d4464974ad65?w=400&h=300&fit=crop", category: "Especiales" },
-            { name: "Lomo Saltado Premium", price: 12.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Pachamanca 3 Carnes", price: 12.00, img: "https://images.unsplash.com/photo-1618889482923-38250401a84e?w=400&h=300&fit=crop", category: "Especiales" },
+            { name: "Lomo Saltado", price: 12.00, img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop", category: "Especiales" },
             { name: "Seco de Cordero", price: 12.00, img: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&h=300&fit=crop", category: "Especiales" },
             { name: "Ají de Gallina", price: 12.00, img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop", category: "Especiales" },
             { name: "Ceviche Mixto", price: 12.00, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop", category: "Especiales" },
@@ -1567,9 +1609,9 @@
             modal.style.display = 'none';
         }
 
-        if (!localStorage.getItem("menu_version_17")) {
+        if (!localStorage.getItem("menu_version_22")) {
             localStorage.removeItem("products");
-            localStorage.setItem("menu_version_17", "true");
+            localStorage.setItem("menu_version_22", "true");
         }
 
         const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -1592,7 +1634,8 @@
             const aliases = {
                 "combinado especial": "combinado",
                 "pan con jamon del pais": null,
-                "torta helada": "tarta helada"
+                "torta helada": "tarta helada",
+                "caldo": null
             };
             if (Object.prototype.hasOwnProperty.call(aliases, normalized) && aliases[normalized] === null) {
                 return "";

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=1200">
     <title>Delicias Karim - Menú Digital</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap"
         rel="stylesheet">
@@ -116,8 +119,8 @@
             z-index: 1;
             width: min(1350px, 96vw);
             background: var(--container-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 50px;
             padding: clamp(14px, 2.2vh, 30px);
             box-shadow: 0 30px 70px var(--shadow-color);
@@ -185,6 +188,7 @@
 
         .logo img {
             width: clamp(300px, 30vh, 520px);
+            height: auto;
             display: block;
             margin-top: clamp(-145px, -15vh, -95px);
             margin-bottom: clamp(-160px, -16vh, -100px);
@@ -456,6 +460,8 @@
             box-sizing: border-box;
             opacity: 0;
             animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            content-visibility: auto;
+            contain-intrinsic-size: 320px 360px;
         }
 
         .product:hover {
@@ -497,8 +503,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 9999;
             display: none;
             justify-content: center;
@@ -559,9 +565,9 @@
 
         .modal-content {
             background: #fff;
-            max-width: 90vw;
-            max-height: 92vh;
-            width: min(760px, 90vw);
+            max-width: 88vw;
+            max-height: 84vh;
+            width: min(760px, 88vw);
             border-radius: 40px;
             overflow: hidden;
             position: relative;
@@ -604,8 +610,7 @@
 
         .modal-img {
             width: 100%;
-            height: 60vh;
-            max-height: 65vh;
+            height: clamp(250px, 46vh, 430px);
             object-fit: cover;
             border-bottom: 2px solid #f0f0f0;
             cursor: zoom-in;
@@ -647,7 +652,7 @@
             padding: 28px 28px 30px;
             text-align: left;
             overflow-y: auto;
-            max-height: calc(92vh - 60vh - 90px);
+            max-height: calc(84vh - clamp(250px, 46vh, 430px) - 90px);
         }
 
         .modal-title {
@@ -1215,7 +1220,7 @@
         </div>
 
         <div class="logo">
-            <img src="logo.png" alt="Delicias Karim">
+            <img src="logo.png" alt="Delicias Karim" fetchpriority="high" decoding="async">
         </div>
 
         <div class="peru-mark"><span class="peru-flag" aria-label="Bandera del Perú" title="Bandera del Perú"></span>
@@ -1223,8 +1228,6 @@
 
         <div class="title">Desayunos Peruanos</div>
         <div class="subtitle">Sabor casero • Recién servido</div>
-
-        <div><span class="date-badge" id="currentDate"></span></div>
 
         <div class="category-tabs" id="categoryTabs">
             <button class="tab-btn active" data-cat="todos" onclick="filterCategory('Todos')">✨ Todos</button>
@@ -1656,9 +1659,11 @@
             filteredProducts.forEach((p, index) => {
                 const imgUrl = p.img ? p.img : `https://picsum.photos/seed/${encodeURIComponent(p.name)}/100/100`;
                 const delay = (index * 0.04).toFixed(2);
+                const loadingMode = index < 4 ? 'eager' : 'lazy';
+                const fetchPriority = index < 2 ? 'high' : 'low';
                 list.innerHTML += `
             <div class="product" data-cat="${p.category || ''}" style="animation-delay: ${delay}s" onclick="openProductModal('${p.name}')">
-                <img src="${imgUrl}" alt="${p.name}" class="product-img" onerror="this.src='https://picsum.photos/seed/food/100/100'">
+                <img src="${imgUrl}" alt="${p.name}" class="product-img" loading="${loadingMode}" decoding="async" fetchpriority="${fetchPriority}" onerror="this.src='https://picsum.photos/seed/food/100/100'">
                 <span class="product-name">${p.name}</span>
                 <span class="price">${p.price.toFixed(2)} €</span>
             </div>
@@ -1813,14 +1818,18 @@
             applyTheme();
         });
 
-        window.addEventListener("resize", renderRandomBackground);
+        let bgResizeTimer = null;
+        window.addEventListener("resize", () => {
+            clearTimeout(bgResizeTimer);
+            bgResizeTimer = setTimeout(renderRandomBackground, 180);
+        });
 
-        function updateDate() {
-            const date = new Date();
-            const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-            const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-            document.getElementById("currentDate").textContent =
-                `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} del ${date.getFullYear()}`;
+        function renderBackgroundDeferred() {
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => renderRandomBackground(), { timeout: 900 });
+                return;
+            }
+            setTimeout(renderRandomBackground, 180);
         }
 
         // Inicializar carrito
@@ -1849,8 +1858,7 @@
             }
         });
 
-        updateDate();
-        renderRandomBackground();
+        renderBackgroundDeferred();
         filterCategory('Todos');
         render();
     </script>
