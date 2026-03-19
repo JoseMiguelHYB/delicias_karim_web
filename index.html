@@ -407,10 +407,18 @@
         .info-section {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
             gap: 20px;
             margin-top: 30px;
             margin-bottom: 10px;
+        }
+
+        .info-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 420px;
         }
 
         .info-card {
@@ -514,24 +522,36 @@
         <div id="productList"></div>
 
         <div class="info-section">
-            <div class="info-card">
-                <div class="info-icon">🕐</div>
-                <div class="info-title">Horario de Atención</div>
-                <div class="info-text">
-                    <strong>Lunes a Viernes:</strong> 7:00 - 14:00<br>
-                    <strong>Sábados:</strong> 7:00 - 15:00<br>
-                    <strong>Domingos:</strong> 8:00 - 14:00
+            <div class="info-column">
+                <div class="info-card">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-title">Horario de Atención</div>
+                    <div class="info-text">
+                        <strong>Lunes a Viernes:</strong> 7:00 - 14:00<br>
+                        <strong>Sábados:</strong> 7:00 - 15:00<br>
+                        <strong>Domingos:</strong> 8:00 - 14:00
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <div class="info-title">Contacto</div>
+                    <div class="info-text">
+                        <strong>Teléfono:</strong> +34 600 000 000<br>
+                        <strong>Para llevar:</strong> ✅ Disponible
+                    </div>
                 </div>
             </div>
-            <div class="info-card">
-                <div class="info-icon">📍</div>
-                <div class="info-title">¿Dónde Estamos?</div>
-                <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.223607478837!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI1JzAwLjQiTiAzwrA0MicxMy42Ilc!5e0!3m2!1ses!2ses!4v1600000000000" allowfullscreen loading="lazy"></iframe>
-                <div class="info-text">
-                    Calle de Ejemplo, 123<br>
-                    Madrid, España
+            <div class="info-column">
+                <div class="info-card" style="flex:1;">
+                    <div class="info-icon">📍</div>
+                    <div class="info-title">¿Dónde Estamos?</div>
+                    <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.223607478837!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI1JzAwLjQiTiAzwrA0MicxMy42Ilc!5e0!3m2!1ses!2ses!4v1600000000000" allowfullscreen loading="lazy"></iframe>
+                    <div class="info-text">
+                        Calle de Ejemplo, 123<br>
+                        Madrid, España
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver en Google Maps</a>
                 </div>
-                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver en Google Maps</a>
             </div>
         </div>
 
