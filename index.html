@@ -78,19 +78,6 @@
             --cat-border: #f4c6da;
         }
 
-        body.dark-mode {
-            --bg-color: #160c11;
-            --container-bg: rgba(30, 18, 24, 0.9);
-            --card-bg: #271720;
-            --text-color: #ffffff;
-            --title-color: #ff9ec4;
-            --subtitle-color: #ffb3cc;
-            --accent-color: #ff4d94;
-            --card-border: rgba(255, 77, 148, 0.3);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --filter-invert: 1;
-        }
-
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -169,22 +156,6 @@
             padding: 10px 20px;
         }
 
-        .theme-toggle {
-            background: var(--card-bg);
-            border: 2px solid var(--card-border);
-            border-radius: 50px;
-            font-size: 28px;
-            cursor: pointer;
-            padding: 8px 16px;
-            transition: all 0.3s;
-            color: var(--text-color);
-            box-shadow: 0 4px 10px var(--shadow-color);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.05);
-        }
-
         .profile-switch {
             display: inline-flex;
             align-items: center;
@@ -229,15 +200,7 @@
             margin-top: clamp(-145px, -15vh, -95px);
             margin-bottom: clamp(-160px, -16vh, -100px);
             mix-blend-mode: multiply;
-            /* Invertir el logo en dark mode si es negro asumiendo q es png */
             filter: saturate(1.05) contrast(1.04) drop-shadow(0 8px 14px rgba(177, 72, 120, 0.14));
-            transition: filter 0.4s;
-        }
-
-        body.dark-mode .logo img {
-            filter: saturate(1.1) contrast(1.05) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.5));
-            mix-blend-mode: normal;
-            clip-path: circle(46% at 50% 50%);
         }
 
         .peru-mark {
@@ -264,12 +227,6 @@
             margin-bottom: 6px;
             letter-spacing: 1px;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-            transition: color 0.4s;
-        }
-
-        body.dark-mode .title {
-            color: #f0f0f0;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .subtitle {
@@ -606,11 +563,6 @@
             color: var(--item-primary);
             font-size: 15px;
             font-variant-numeric: tabular-nums;
-        }
-
-        body.dark-mode .product-controls {
-            background: rgba(39, 23, 32, 0.9);
-            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .product:hover .product-name {
@@ -1175,11 +1127,6 @@
                 padding: 6px 8px;
             }
 
-            .theme-toggle {
-                font-size: 22px;
-                padding: 6px 12px;
-            }
-
             .profile-switch {
                 gap: 4px;
                 padding: 3px;
@@ -1636,7 +1583,6 @@
     <div class="menu-container">
 
         <div class="header-top">
-            <button class="theme-toggle" id="themeBtn" title="Cambiar Tema">🌙</button>
             <div class="profile-switch" aria-label="Selector de perfil">
                 <button class="profile-btn active" type="button" data-profile="cliente">Cliente</button>
                 <button class="profile-btn" type="button" data-profile="admin">Administrador</button>
@@ -2324,20 +2270,6 @@
             panel.style.display = panel.style.display === "none" ? "block" : "none";
         });
 
-        // Dark Mode Logic
-        const themeBtn = document.getElementById('themeBtn');
-        let isDarkMode = localStorage.getItem('dark_mode') === 'true';
-
-        function applyTheme() {
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-                themeBtn.textContent = '☀️';
-            } else {
-                document.body.classList.remove('dark-mode');
-                themeBtn.textContent = '🌙';
-            }
-        }
-
         const profileButtons = document.querySelectorAll('.profile-btn');
 
         function applyProfile(profile) {
@@ -2354,14 +2286,7 @@
             renderCart();
         }
 
-        applyTheme();
         applyProfile(currentProfile);
-
-        themeBtn.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            localStorage.setItem('dark_mode', isDarkMode);
-            applyTheme();
-        });
 
         profileButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
