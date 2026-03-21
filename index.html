@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delicias Karim - Menú Digital</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -976,6 +976,16 @@
         }
 
         @media (max-width: 680px) {
+            #productList {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .product-name {
+                font-size: clamp(18px, 2.1vh, 22px);
+                padding: 0 10px;
+            }
+
             .info-section {
                 flex-direction: column;
                 gap: 10px;
