@@ -149,7 +149,7 @@
         /* Logo y Header */
         .header-top {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             position: relative;
             z-index: 10;
@@ -201,6 +201,7 @@
             margin-bottom: clamp(-160px, -16vh, -100px);
             mix-blend-mode: multiply;
             filter: saturate(1.05) contrast(1.04) drop-shadow(0 8px 14px rgba(177, 72, 120, 0.14));
+            transition: filter 0.4s;
         }
 
         .peru-mark {
@@ -227,6 +228,7 @@
             margin-bottom: 6px;
             letter-spacing: 1px;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            transition: color 0.4s;
         }
 
         .subtitle {
