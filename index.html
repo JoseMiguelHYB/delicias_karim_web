@@ -185,6 +185,35 @@
             transform: scale(1.05);
         }
 
+        .profile-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 999px;
+            padding: 4px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        .profile-btn {
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 7px 12px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .profile-btn.active {
+            color: #fff;
+            background: linear-gradient(135deg, #e94e77, #ff3d8d);
+        }
+
         .logo {
             display: flex;
             justify-content: center;
@@ -536,6 +565,15 @@
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
+        }
+
+        body[data-profile="cliente"] .product-controls,
+        body[data-profile="cliente"] .floating-cart {
+            display: none !important;
+        }
+
+        body[data-profile="cliente"] #adminPanel {
+            display: none !important;
         }
 
         .product-qty-btn {
@@ -1142,6 +1180,16 @@
                 padding: 6px 12px;
             }
 
+            .profile-switch {
+                gap: 4px;
+                padding: 3px;
+            }
+
+            .profile-btn {
+                font-size: 11px;
+                padding: 6px 9px;
+            }
+
             .logo img {
                 width: clamp(220px, 44vw, 290px);
                 margin-top: -68px;
@@ -1589,6 +1637,10 @@
 
         <div class="header-top">
             <button class="theme-toggle" id="themeBtn" title="Cambiar Tema">🌙</button>
+            <div class="profile-switch" aria-label="Selector de perfil">
+                <button class="profile-btn active" type="button" data-profile="cliente">Cliente</button>
+                <button class="profile-btn" type="button" data-profile="admin">Administrador</button>
+            </div>
         </div>
 
         <div class="logo">
@@ -1786,6 +1838,7 @@
         ];
 
         let currentCategory = 'Todos';
+        let currentProfile = localStorage.getItem('user_profile') === 'admin' ? 'admin' : 'cliente';
         let modalProducts = [];
         let modalIndex = 0;
 
@@ -2266,6 +2319,7 @@
         }
 
         document.body.addEventListener("dblclick", () => {
+            if (currentProfile !== 'admin') return;
             const panel = document.getElementById("adminPanel");
             panel.style.display = panel.style.display === "none" ? "block" : "none";
         });
@@ -2284,12 +2338,35 @@
             }
         }
 
+        const profileButtons = document.querySelectorAll('.profile-btn');
+
+        function applyProfile(profile) {
+            currentProfile = profile === 'admin' ? 'admin' : 'cliente';
+            document.body.setAttribute('data-profile', currentProfile);
+            localStorage.setItem('user_profile', currentProfile);
+            profileButtons.forEach((btn) => {
+                btn.classList.toggle('active', btn.getAttribute('data-profile') === currentProfile);
+            });
+            if (currentProfile !== 'admin') {
+                closeFloatingCart();
+            }
+            render();
+            renderCart();
+        }
+
         applyTheme();
+        applyProfile(currentProfile);
 
         themeBtn.addEventListener('click', () => {
             isDarkMode = !isDarkMode;
             localStorage.setItem('dark_mode', isDarkMode);
             applyTheme();
+        });
+
+        profileButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                applyProfile(btn.getAttribute('data-profile') || 'cliente');
+            });
         });
 
         let bgResizeTimer = null;

@@ -881,38 +881,156 @@
             border-color: transparent;
         }
 
-        /* Botón Flotante WhatsApp */
-        .fab-whatsapp {
+        /* Flotante Mi Pedido */
+        .floating-cart {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            padding: 16px 28px;
-            border-radius: 50px;
-            text-decoration: none;
+            right: 22px;
+            bottom: 20px;
+            z-index: 120;
             display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .floating-cart-toggle {
+            border: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: #fff;
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4);
-            z-index: 100;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            gap: 10px;
+            padding: 12px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(51, 65, 85, 0.38);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
 
-        .fab-whatsapp:hover {
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 14px 32px rgba(37, 211, 102, 0.5);
-            color: white;
+        .floating-cart-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(51, 65, 85, 0.44);
         }
 
-        .fab-icon {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        .floating-cart-toggle.has-items {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 12px 24px rgba(37, 211, 102, 0.4);
+        }
+
+        .floating-cart-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .floating-cart-label {
+            white-space: nowrap;
+        }
+
+        .floating-cart-count {
+            min-width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.22);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 7px;
+            font-size: 13px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .floating-cart-panel {
+            width: min(380px, calc(100vw - 20px));
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 22px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.22);
+            padding: 12px;
+            display: none;
+        }
+
+        .floating-cart-panel.open {
+            display: block;
+            animation: popIn 0.2s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .floating-cart-title {
+            margin: 0 0 10px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--title-color);
+        }
+
+        .floating-cart-items {
+            max-height: 260px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 2px;
+        }
+
+        .floating-cart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            padding: 8px 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .floating-cart-row-name {
+            font-weight: 600;
+            color: var(--text-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .floating-cart-row-meta {
+            color: rgba(0, 0, 0, 0.65);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .floating-cart-total {
+            margin-top: 10px;
+            text-align: right;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--title-color);
+        }
+
+        .floating-cart-checkout {
+            margin-top: 10px;
+            width: 100%;
+            border: 0;
+            border-radius: 14px;
+            padding: 10px 12px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
         }
 
         /* Panel admin */
@@ -1116,18 +1234,32 @@
                 border-radius: 18px;
             }
 
-            .fab-whatsapp {
-                bottom: 14px;
+            .floating-cart {
                 right: 10px;
-                padding: 11px 16px;
-                font-size: 16px;
-                border-radius: 28px;
+                bottom: 10px;
                 gap: 8px;
             }
 
-            .fab-icon {
-                width: 24px;
-                height: 24px;
+            .floating-cart-toggle {
+                padding: 10px 14px;
+                font-size: 14px;
+                gap: 8px;
+            }
+
+            .floating-cart-count {
+                min-width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+
+            .floating-cart-panel {
+                width: min(340px, calc(100vw - 14px));
+                border-radius: 18px;
+                padding: 10px;
+            }
+
+            .floating-cart-items {
+                max-height: 42vh;
             }
 
             .info-section {
@@ -1177,6 +1309,10 @@
             .info-link {
                 font-size: 13px;
                 padding: 7px 18px;
+            }
+
+            .pay-methods {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1301,6 +1437,55 @@
 
         .info-link:hover {
             transform: translateY(-2px);
+        }
+
+        .promo-card {
+            text-align: left;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .promo-card .info-title {
+            margin-bottom: 2px;
+        }
+
+        .promo-chip {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, #e94e77, #ff3d8d);
+            border-radius: 999px;
+            padding: 5px 10px;
+        }
+
+        .promo-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .pay-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .pay-method {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-color);
+            background: rgba(0, 0, 0, 0.02);
         }
 
         .map-embed {
@@ -1434,12 +1619,16 @@
 
         <div class="info-section">
             <div class="info-column">
-                <div class="info-card cart-card">
-                    <div class="info-icon">🛒</div>
-                    <div class="info-title">Mi Pedido</div>
-                    <div class="cart-items" id="cartItems"></div>
-                    <div class="cart-total" id="cartTotal"></div>
-                    <button class="info-link" id="checkoutBtn">Generar factura</button>
+                <div class="info-card promo-card">
+                    <span class="promo-chip">Combo Ahorro</span>
+                    <div class="info-title">Pan con Chicharrón + Tamal + Café</div>
+                    <div class="promo-price">12.00 €</div>
+                    <div class="info-text">Desayuno completo con precio especial por tiempo limitado.</div>
+                </div>
+                <div class="info-card promo-card">
+                    <span class="promo-chip">Plato del Día</span>
+                    <div class="info-title">Pachamanca 3 Carnes</div>
+                    <div class="info-text">Sabor tradicional andino con cordero, pollo y cerdo.</div>
                 </div>
             </div>
             <div class="info-column">
@@ -1463,7 +1652,7 @@
                 </div>
             </div>
             <div class="info-column">
-                <div class="info-card neutral" style="flex:1;">
+                <div class="info-card neutral">
                     <div class="info-icon">📍</div>
                     <div class="info-title">¿Dónde Estamos?</div>
                     <iframe class="map-embed"
@@ -1475,6 +1664,15 @@
                     </div>
                     <a href="https://www.google.com/maps/search/?api=1&query=Delicias+Karim+Martinez+de+la+Riva+4+Madrid"
                         target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver en Google Maps</a>
+                </div>
+                <div class="info-card promo-card">
+                    <span class="promo-chip">Métodos de Pago</span>
+                    <div class="pay-methods">
+                        <div class="pay-method">💳 Tarjeta</div>
+                        <div class="pay-method">💶 Efectivo</div>
+                        <div class="pay-method">📱 Bizum</div>
+                        <div class="pay-method">🛵 Para llevar</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1525,10 +1723,19 @@
         </div>
     </div>
 
-    <a href="https://wa.me/34679574301?text=Hola%20Delicias%20Karim,%20me%20gustaría%20hacer%20un%20pedido..."
-        class="fab-whatsapp" target="_blank" rel="noopener noreferrer">
-        <img src="whatsapp.png" alt="WhatsApp Icon" class="fab-icon"> WhatsApp
-    </a>
+    <div class="floating-cart" id="floatingCart">
+        <button type="button" class="floating-cart-toggle" id="floatingCartToggle" aria-expanded="false" aria-controls="floatingCartPanel">
+            <span class="floating-cart-icon">🧾</span>
+            <span class="floating-cart-label">Mi pedido</span>
+            <span class="floating-cart-count" id="floatingCartCount">0</span>
+        </button>
+        <div class="floating-cart-panel" id="floatingCartPanel">
+            <p class="floating-cart-title">Resumen rápido</p>
+            <div class="floating-cart-items" id="floatingCartItems"></div>
+            <div class="floating-cart-total" id="floatingCartTotal">Total: 0.00 €</div>
+            <button type="button" class="floating-cart-checkout" id="floatingCheckoutBtn">Generar factura</button>
+        </div>
+    </div>
 
     <script>
         const defaultProducts = [
@@ -1590,6 +1797,60 @@
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
+        function getCartCount() {
+            return cart.reduce((acc, item) => acc + item.qty, 0);
+        }
+
+        function closeFloatingCart() {
+            const panel = document.getElementById('floatingCartPanel');
+            const toggle = document.getElementById('floatingCartToggle');
+            if (!panel || !toggle) return;
+            panel.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function renderFloatingCart() {
+            const countEl = document.getElementById('floatingCartCount');
+            const toggle = document.getElementById('floatingCartToggle');
+            const itemsEl = document.getElementById('floatingCartItems');
+            const totalEl = document.getElementById('floatingCartTotal');
+            if (!countEl || !toggle || !itemsEl || !totalEl) return;
+
+            const count = getCartCount();
+            countEl.textContent = String(count);
+            toggle.classList.toggle('has-items', count > 0);
+
+            itemsEl.innerHTML = '';
+            if (!cart.length) {
+                itemsEl.innerHTML = '<div style="opacity:0.65; padding: 8px 4px;">No hay nada en tu pedido todavía</div>';
+                totalEl.textContent = 'Total: 0.00 €';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item) => {
+                const lineTotal = item.price * item.qty;
+                total += lineTotal;
+
+                const row = document.createElement('div');
+                row.className = 'floating-cart-row';
+
+                const left = document.createElement('span');
+                left.className = 'floating-cart-row-name';
+                left.textContent = item.name;
+
+                const right = document.createElement('span');
+                right.className = 'floating-cart-row-meta';
+                right.textContent = `${item.qty} x ${item.price.toFixed(2)} €`;
+
+                row.appendChild(left);
+                row.appendChild(right);
+                itemsEl.appendChild(row);
+            });
+
+            totalEl.textContent = `Total: ${total.toFixed(2)} €`;
+        }
+
         function getProductQty(productName) {
             const item = cart.find((i) => i.name === productName);
             return item ? item.qty : 0;
@@ -1606,13 +1867,18 @@
         function renderCart() {
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
-            if (!cartItems || !cartTotal) return;
+            if (!cartItems || !cartTotal) {
+                syncProductQtyUI();
+                renderFloatingCart();
+                return;
+            }
 
             cartItems.innerHTML = '';
             if (!cart.length) {
                 cartItems.innerHTML = '<div style="opacity:0.65; padding: 10px 0;">No hay nada en tu pedido todavía</div>';
                 cartTotal.textContent = 'Total: 0.00 €';
                 syncProductQtyUI();
+                renderFloatingCart();
                 return;
             }
 
@@ -1671,6 +1937,7 @@
 
             cartTotal.textContent = `Total: ${total.toFixed(2)} €`;
             syncProductQtyUI();
+            renderFloatingCart();
         }
 
         function addToCart(productName, productPrice) {
@@ -1826,6 +2093,7 @@
 
         function filterCategory(category) {
             currentCategory = category;
+            closeFloatingCart();
 
             // Actualizar atributo en el body para CSS dinámico
             document.body.setAttribute('data-category', category === 'Bebidas & Postres' ? 'Bebidas' : category);
@@ -2041,13 +2309,33 @@
         // Inicializar carrito
         renderCart();
 
-        document.getElementById('checkoutBtn').addEventListener('click', openInvoiceModal);
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', openInvoiceModal);
+        }
+        document.getElementById('floatingCheckoutBtn').addEventListener('click', openInvoiceModal);
         document.getElementById('invoiceCancelBtn').addEventListener('click', closeInvoiceModal);
         document.getElementById('invoiceConfirmBtn').addEventListener('click', checkoutCart);
         document.getElementById('customerNameInput').addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 checkoutCart();
+            }
+        });
+
+        const floatingCartRoot = document.getElementById('floatingCart');
+        const floatingCartToggle = document.getElementById('floatingCartToggle');
+        const floatingCartPanel = document.getElementById('floatingCartPanel');
+
+        floatingCartToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            floatingCartPanel.classList.toggle('open');
+            floatingCartToggle.setAttribute('aria-expanded', String(floatingCartPanel.classList.contains('open')));
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!floatingCartRoot.contains(event.target)) {
+                closeFloatingCart();
             }
         });
 
