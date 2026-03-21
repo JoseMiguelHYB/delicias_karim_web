@@ -521,21 +521,31 @@
         }
 
         .product-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 3;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 6px;
+            padding: 4px 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
 
         .product-qty-btn {
-            width: 34px;
-            height: 34px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             border: 1px solid var(--item-border);
             background: #ffffff;
             color: var(--item-primary);
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -552,12 +562,17 @@
         }
 
         .product-qty {
-            min-width: 26px;
+            min-width: 18px;
             text-align: center;
             font-weight: 800;
             color: var(--item-primary);
-            font-size: 19px;
+            font-size: 15px;
             font-variant-numeric: tabular-nums;
+        }
+
+        body.dark-mode .product-controls {
+            background: rgba(39, 23, 32, 0.9);
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .product:hover .product-name {
@@ -1077,19 +1092,21 @@
             }
 
             .product-controls {
-                gap: 8px;
-                margin-bottom: 8px;
+                top: 8px;
+                right: 8px;
+                gap: 4px;
+                padding: 3px 5px;
             }
 
             .product-qty-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 20px;
+                width: 26px;
+                height: 26px;
+                font-size: 16px;
             }
 
             .product-qty {
-                min-width: 24px;
-                font-size: 18px;
+                min-width: 16px;
+                font-size: 14px;
             }
 
             .price {
