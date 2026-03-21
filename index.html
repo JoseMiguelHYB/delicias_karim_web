@@ -976,14 +976,118 @@
         }
 
         @media (max-width: 680px) {
+            body {
+                align-items: flex-start;
+                padding: 6px;
+            }
+
+            .menu-container {
+                width: 100%;
+                border-width: 7px;
+                border-radius: 28px;
+                padding: 10px 10px 14px;
+            }
+
+            .menu-container::before {
+                inset: 8px;
+                border-radius: 20px;
+            }
+
+            .header-top {
+                padding: 6px 8px;
+            }
+
+            .theme-toggle {
+                font-size: 22px;
+                padding: 6px 12px;
+            }
+
+            .logo img {
+                width: clamp(220px, 44vw, 290px);
+                margin-top: -68px;
+                margin-bottom: -76px;
+            }
+
+            .title {
+                font-size: clamp(46px, 7.2vw, 56px);
+                line-height: 1.05;
+                margin-bottom: 8px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+                letter-spacing: 1px;
+                margin-bottom: 12px;
+            }
+
+            .category-tabs {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 9px;
+                margin-bottom: 16px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                font-size: 15px;
+                border-radius: 18px;
+                padding: 10px 8px;
+                letter-spacing: 0;
+            }
+
+            .tab-btn[data-cat="segundos"],
+            .tab-btn[data-cat="dulces"] {
+                grid-column: 1 / -1;
+            }
+
             #productList {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 12px;
+                margin-bottom: 14px;
+            }
+
+            .product {
+                border-radius: 18px;
+            }
+
+            .product-img {
+                aspect-ratio: 4 / 3;
+                margin-bottom: 8px;
             }
 
             .product-name {
                 font-size: clamp(18px, 2.1vh, 22px);
                 padding: 0 10px;
+                margin-bottom: 8px;
+                min-height: 52px;
+                line-height: 1.2;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-wrap: balance;
+            }
+
+            .price {
+                font-size: 20px;
+                padding: 6px 16px;
+                margin-bottom: 14px;
+                border-radius: 18px;
+            }
+
+            .fab-whatsapp {
+                bottom: 14px;
+                right: 10px;
+                padding: 11px 16px;
+                font-size: 16px;
+                border-radius: 28px;
+                gap: 8px;
+            }
+
+            .fab-icon {
+                width: 24px;
+                height: 24px;
             }
 
             .info-section {
