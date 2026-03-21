@@ -896,7 +896,7 @@
         .floating-cart-toggle {
             border: 0;
             border-radius: 999px;
-            background: linear-gradient(135deg, #ff5f95 0%, #e94e77 100%);
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
             color: #fff;
             display: inline-flex;
             align-items: center;
@@ -906,13 +906,13 @@
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 12px 24px rgba(233, 78, 119, 0.36);
+            box-shadow: 0 12px 24px rgba(51, 65, 85, 0.38);
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
 
         .floating-cart-toggle:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 30px rgba(233, 78, 119, 0.42);
+            box-shadow: 0 16px 30px rgba(51, 65, 85, 0.44);
         }
 
         .floating-cart-toggle.has-items {
@@ -1310,6 +1310,10 @@
                 font-size: 13px;
                 padding: 7px 18px;
             }
+
+            .pay-methods {
+                grid-template-columns: 1fr;
+            }
         }
 
         .cart-items {
@@ -1433,6 +1437,55 @@
 
         .info-link:hover {
             transform: translateY(-2px);
+        }
+
+        .promo-card {
+            text-align: left;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .promo-card .info-title {
+            margin-bottom: 2px;
+        }
+
+        .promo-chip {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, #e94e77, #ff3d8d);
+            border-radius: 999px;
+            padding: 5px 10px;
+        }
+
+        .promo-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .pay-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .pay-method {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-color);
+            background: rgba(0, 0, 0, 0.02);
         }
 
         .map-embed {
@@ -1566,12 +1619,16 @@
 
         <div class="info-section">
             <div class="info-column">
-                <div class="info-card cart-card">
-                    <div class="info-icon">🛒</div>
-                    <div class="info-title">Mi Pedido</div>
-                    <div class="cart-items" id="cartItems"></div>
-                    <div class="cart-total" id="cartTotal"></div>
-                    <button class="info-link" id="checkoutBtn">Generar factura</button>
+                <div class="info-card promo-card">
+                    <span class="promo-chip">Combo Ahorro</span>
+                    <div class="info-title">Pan con Chicharrón + Tamal + Café</div>
+                    <div class="promo-price">12.00 €</div>
+                    <div class="info-text">Desayuno completo con precio especial por tiempo limitado.</div>
+                </div>
+                <div class="info-card promo-card">
+                    <span class="promo-chip">Plato del Día</span>
+                    <div class="info-title">Pachamanca 3 Carnes</div>
+                    <div class="info-text">Sabor tradicional andino con cordero, pollo y cerdo.</div>
                 </div>
             </div>
             <div class="info-column">
@@ -1595,7 +1652,7 @@
                 </div>
             </div>
             <div class="info-column">
-                <div class="info-card neutral" style="flex:1;">
+                <div class="info-card neutral">
                     <div class="info-icon">📍</div>
                     <div class="info-title">¿Dónde Estamos?</div>
                     <iframe class="map-embed"
@@ -1607,6 +1664,15 @@
                     </div>
                     <a href="https://www.google.com/maps/search/?api=1&query=Delicias+Karim+Martinez+de+la+Riva+4+Madrid"
                         target="_blank" rel="noopener noreferrer" class="info-link">📍 Ver en Google Maps</a>
+                </div>
+                <div class="info-card promo-card">
+                    <span class="promo-chip">Métodos de Pago</span>
+                    <div class="pay-methods">
+                        <div class="pay-method">💳 Tarjeta</div>
+                        <div class="pay-method">💶 Efectivo</div>
+                        <div class="pay-method">📱 Bizum</div>
+                        <div class="pay-method">🛵 Para llevar</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1801,7 +1867,11 @@
         function renderCart() {
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
-            if (!cartItems || !cartTotal) return;
+            if (!cartItems || !cartTotal) {
+                syncProductQtyUI();
+                renderFloatingCart();
+                return;
+            }
 
             cartItems.innerHTML = '';
             if (!cart.length) {
@@ -2239,7 +2309,10 @@
         // Inicializar carrito
         renderCart();
 
-        document.getElementById('checkoutBtn').addEventListener('click', openInvoiceModal);
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', openInvoiceModal);
+        }
         document.getElementById('floatingCheckoutBtn').addEventListener('click', openInvoiceModal);
         document.getElementById('invoiceCancelBtn').addEventListener('click', closeInvoiceModal);
         document.getElementById('invoiceConfirmBtn').addEventListener('click', checkoutCart);
